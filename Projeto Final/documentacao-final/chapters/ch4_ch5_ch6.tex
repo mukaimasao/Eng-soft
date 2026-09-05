@@ -1,0 +1,499 @@
+\chapter{Projeto de Interface do Usuário}
+
+Na etapa de Engenharia de Software I, a própria equipe produziu a
+especificação de requisitos do EduHub, definindo restrições, requisitos
+funcionais e não funcionais e histórias de usuário, mas sem chegar a
+desenhar \textit{mockups} de interface. Este
+capítulo parte desse trabalho anterior: primeiro deriva os princípios de
+interface e os fluxos de interação mais relevantes a partir das restrições
+e histórias já levantadas e, em seguida, apresenta os protótipos de alta
+fidelidade produzidos no Figma para o fluxo mais crítico do sistema, o
+caso de uso CU-03.
+
+\section{Princípios de interface}
+
+A interface do EduHub deve seguir os seguintes princípios, todos rastreáveis a
+restrições e requisitos não funcionais do documento de requisitos:
+
+\begin{itemize}
+    \item \textbf{Aplicação web responsiva} (R-1): o sistema é acessado
+    exclusivamente pelo navegador, sem aplicativo móvel nativo nesta versão.
+    A interface deve, portanto, se adaptar a diferentes tamanhos de tela,
+    especialmente para o perfil Aluno, para o qual a equipe previu maior
+    uso em dispositivos móveis ao definir os perfis de usuário na etapa de
+    requisitos.
+    \item \textbf{Acessibilidade} (R-2 e RNF-10): a interface deve aderir às
+    diretrizes WCAG 2.1, nível AA, garantindo o uso do sistema por pessoas com
+    deficiência.
+    \item \textbf{Intuitividade adaptada ao perfil} (RNF-09): a navegação deve
+    ser clara e adequada ao nível de proficiência de cada grupo de usuário.
+    Ao definir os perfis de usuário na etapa de requisitos, a equipe
+    caracterizou essa necessidade de forma distinta por perfil:
+    \begin{itemize}
+        \item o \textbf{Aluno} tem baixo nível de acesso, foco em
+        visualização de informações e alta expectativa de acessibilidade em
+        dispositivos móveis;
+        \item o \textbf{Professor} tem nível médio de acesso, foco pedagógico
+        e realiza inserção frequente de dados (frequência e notas), exigindo
+        uma interface intuitiva que reduza o esforço em tarefas repetitivas;
+        \item o \textbf{Administrativo} tem alto nível de acesso e
+        conhecimento médio de sistemas de gestão, realizando tarefas de
+        cadastro e manutenção de dados mais complexas.
+    \end{itemize}
+    \item \textbf{Compatibilidade de navegadores} (P-2): a interface deve
+    funcionar corretamente em Google Chrome e derivados do Chromium, Mozilla
+    Firefox e Safari (versões recentes), sendo esses os únicos navegadores
+    contemplados pelo escopo de teste e suporte.
+\end{itemize}
+
+\section{Fluxos principais de usuário}
+
+Os fluxos a seguir foram derivados das histórias de usuário e dos casos de
+uso da especificação de requisitos. Cada um representa uma tarefa central
+para o respectivo perfil, e não uma tela específica.
+
+\subsection{Autenticação e recuperação de senha (HU-01)}
+
+Qualquer usuário do sistema (Aluno, Professor ou Administrativo) precisa
+autenticar-se por e-mail e senha antes de acessar suas funcionalidades. Caso
+o usuário não recorde a senha, ele deve conseguir solicitar sua recuperação
+por meio de um link ou código enviado ao e-mail cadastrado (RF-02). A tarefa
+do usuário é, portanto, concluir o acesso ao sistema de forma rápida e
+segura. O histórico de login (RF-05) é registrado de forma transparente ao
+usuário, sem exigir ação adicional dele.
+
+\subsection{Lançamento de notas e registro de frequência (HU-13 e HU-14)}
+
+Esse é o fluxo central do perfil Professor, que precisa inserir dados com
+frequência regular. A partir da lista de turmas e disciplinas vinculadas a
+ele (RF-21), o professor deve conseguir lançar e editar notas parciais e
+finais por aluno e período (RF-22, RF-23), além de registrar, por aula ou
+por data, o status de frequência de cada aluno: presente, ausente ou
+justificado (RF-24). O sistema calcula automaticamente o percentual de
+frequência (RF-25), sem exigir cálculo manual do professor. Caso o período
+letivo já esteja bloqueado pela Coordenação (RF-26), a interface deve
+impedir a edição e comunicar claramente esse impedimento, conforme
+detalhado no caso de uso CU-03 (Apêndice~\ref{apx:requisitos}). Correções
+após o bloqueio dependem de solicitação do professor à Coordenação, que
+desbloqueia o período antes de qualquer nova edição.
+
+\subsection{Consulta ao boletim pelo aluno (HU-16)}
+
+O aluno acessa seu boletim para visualizar notas parciais e finais de todas
+as disciplinas, organizadas por período letivo (RF-28), e o detalhamento da
+sua frequência, incluindo datas de falta e percentual acumulado de presença
+(RF-29). Trata-se de um fluxo essencialmente de leitura, alinhado ao perfil
+de baixo nível de acesso e foco em visualização definido pela equipe para o
+Aluno, e que deve responder rapidamente (RNF-01).
+
+\subsection{Cadastro de usuários e gestão de cargos (HU-03 e HU-04)}
+
+O Administrativo cadastra novos usuários preenchendo os campos obrigatórios
+exigidos pelo sistema (RF-13), associando obrigatoriamente um cargo a cada
+novo cadastro (RF-06). O mesmo perfil pode alterar dados de terceiros
+(RF-11) e inativar usuários mediante confirmação (RF-12). De forma
+complementar, o Administrativo pode criar cargos personalizados, definir sua
+hierarquia (RF-08) e configurar as permissões associadas a cada cargo
+(RF-10), sem poder excluir os cargos padrão do sistema (RF-09). Esse fluxo é
+o mais complexo do sistema do ponto de vista de interface, compatível com o
+maior nível de acesso e conhecimento médio de sistemas de gestão que a
+equipe atribuiu ao perfil Administrativo ao definir os perfis de usuário.
+
+\section{Protótipos de tela}
+
+Para manter o escopo desta iteração enxuto, a prototipação no Figma
+concentra-se no fluxo do caso de uso CU-03 (Finalizar e Bloquear Período de
+Lançamento), o mais crítico do sistema por proteger a integridade do registro
+acadêmico e por girar em torno da regra de trava de lançamento (RF-26). A
+Tabela~\ref{tab:telas-figma} lista as telas desse fluxo, do lançamento de notas
+e frequência pelo professor até o travamento do período pela coordenação,
+associando cada uma ao perfil de usuário correspondente e aos requisitos que a
+originam. Cada tela foi prototipada em alta fidelidade em duas versões, uma para
+\textit{desktop} e outra para dispositivos móveis, evidenciando a
+responsividade exigida pelo princípio R-1. As subseções a seguir apresentam uma
+etapa do fluxo por vez, sempre com a versão \textit{desktop} à esquerda e a
+versão mobile correspondente à direita, para comparação. Os protótipos dos
+demais fluxos e casos de uso serão elaborados de forma incremental nas próximas
+iterações.
+
+\begin{table}[ht]
+\centering
+\caption{Telas do fluxo do CU-03 prototipadas no Figma.}\label{tab:telas-figma}
+\begin{tabularx}{\textwidth}{p{0.06\textwidth} p{0.30\textwidth} p{0.16\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Tela} & \textbf{Perfil} & \textbf{Fluxo/requisitos relacionados} \\
+\midrule
+T-01 & Tela de login & Todos & Autenticação por e-mail e senha (HU-01, RF-01) \\
+T-02 & Lançamento e edição de notas & Professor & Notas parciais e finais por turma e período, com edição bloqueada quando o período está travado (HU-13, RF-22, RF-23, RF-26) \\
+T-03 & Registro de frequência (chamada) & Professor & Presença, falta ou justificativa por aula e cálculo automático de faltas (HU-14, RF-24, RF-25) \\
+T-04 & Gestão e travamento de períodos letivos & Coordenação & Verificação de pendências, travamento do lançamento e registro em log de auditoria (CU-03, RF-26, RF-44) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{O fluxo do CU-03 escolhido}
+
+O CU-03 (Finalizar e Bloquear Período de Lançamento) foi escolhido como fluxo a
+prototipar por ser o ponto em que se encontram os dois perfis operacionais do
+sistema, o Professor e a Coordenação, em torno da regra que garante a
+integridade do registro acadêmico, a trava de lançamento por período (RF-26).
+Ele exercita ao mesmo tempo a inserção frequente de dados do Professor (notas e
+frequência) e a ação administrativa de encerramento do período, o que permite
+demonstrar em um único fluxo tanto o estado editável quanto o estado bloqueado
+das telas.
+
+O fluxo, conforme detalhado no CU-03 do Apêndice~\ref{apx:requisitos}, percorre
+as seguintes etapas:
+
+\begin{enumerate}
+    \item o usuário se autentica na tela de login (T-01), comum a todos os
+    perfis;
+    \item o Professor acessa suas turmas e, com o período letivo aberto,
+    lança e edita as notas (T-02) e registra a frequência da turma (T-03);
+    \item a Coordenação acompanha, na gestão de períodos letivos (T-04), o
+    progresso de preenchimento de notas e frequência de todas as disciplinas do
+    período;
+    \item a Coordenação pode bloquear o período a qualquer momento: havendo
+    disciplinas com notas ou frequência pendentes, o sistema apenas sinaliza
+    essas pendências como aviso, sem impedir o bloqueio, e a Coordenação
+    decide se bloqueia mesmo assim, o que altera o status do período para
+    ``Bloqueado'' e registra a ação no log de auditoria (RF-44);
+    \item a partir desse momento, a trava (RF-26) passa a valer, e o Professor
+    que retornar à tela de lançamento encontra os campos desabilitados, sem
+    conseguir alterar notas ou frequência do período encerrado;
+    \item eventuais correções após o bloqueio dependem de solicitação do
+    Professor à Coordenação, que reabre o período pela ação ``Desbloquear
+    Período'', realiza os ajustes necessários e bloqueia o período novamente
+    ao concluir.
+\end{enumerate}
+
+As telas cobrem propositalmente os dois estados do período, aberto e bloqueado,
+justamente para tornar visível o efeito da trava, que é o cerne do caso de uso.
+
+\subsection{Autenticação (T-01)}
+
+O acesso ao sistema começa pela tela de login (Figura~\ref{fig:tela-login}),
+comum a todos os perfis. O usuário informa e-mail e senha e dispõe do atalho
+``Esqueci minha senha'' para a recuperação por e-mail (RF-02). A tela concretiza
+a primeira etapa do CU-03 e a história de autenticação HU-01.
+
+\comparativotela{images/tela-cu03-01-login.png}{images/tela-cu03-01-login-mobile.png}%
+{T-01 -- Tela de login (desktop à esquerda, mobile à direita), comum a todos os perfis.}{fig:tela-login}
+
+\subsection{Lançamento e edição de notas (T-02)}
+
+Autenticado como Professor, o usuário chega à tela inicial
+(Figura~\ref{fig:prof-home}), que lista suas turmas do período corrente, com o
+progresso de lançamento de cada uma e atalhos diretos para ``Notas'' e
+``Frequência''.
+
+\comparativotela{images/tela-cu03-02-prof-home.png}{images/tela-cu03-02-prof-home-mobile.png}%
+{Tela inicial do Professor (desktop à esquerda, mobile à direita), com as turmas do período e atalhos para notas e frequência.}{fig:prof-home}
+
+Na tela de lançamento de notas com o período aberto
+(Figura~\ref{fig:notas-aberto}), o Professor edita as notas parciais e finais de
+cada aluno por avaliação (RF-22, RF-23). O cabeçalho indica o estado ``Aberto''
+do período, e o sistema calcula automaticamente a média a partir da fórmula de
+cada aluno, exibida na própria linha. As ações ``Salvar Notas'' e ``Lançar
+Notas'' ficam habilitadas.
+
+\comparativotela{images/tela-cu03-03-notas-aberto.png}{images/tela-cu03-03-notas-aberto-mobile.png}%
+{T-02 -- Lançamento de notas com o período aberto (desktop à esquerda, mobile à direita): campos e ações habilitados.}{fig:notas-aberto}
+
+\subsection{Registro de frequência (T-03)}
+
+Ainda com o período aberto, o Professor registra a frequência da turma
+(Figura~\ref{fig:frequencia-aberto}), marcando cada aluno como presente (P),
+ausente (A) ou justificado (J) por aula e data (RF-24). O sistema totaliza as
+faltas e calcula automaticamente o percentual de frequência de cada aluno
+(RF-25), sinalizando em vermelho quem está abaixo do mínimo, sem exigir cálculo
+manual do Professor.
+
+\comparativotela{images/tela-cu03-04-frequencia-aberto.png}{images/tela-cu03-04-frequencia-aberto-mobile.png}%
+{T-03 -- Registro de frequência (desktop à esquerda, mobile à direita) com cálculo automático do percentual (RF-25).}{fig:frequencia-aberto}
+
+\subsection{Gestão e travamento de períodos letivos (T-04)}
+
+Autenticada como Coordenação, a usuária chega à tela inicial
+(Figura~\ref{fig:coord-home}), que lista os períodos letivos e seu estado
+(aberto, com pendências ou fechado), com acesso aos detalhes de cada um.
+
+\comparativotela{images/tela-cu03-05-coord-home.png}{images/tela-cu03-05-coord-home-mobile.png}%
+{Tela inicial da Coordenação (desktop à esquerda, mobile à direita), com os períodos letivos e seus estados.}{fig:coord-home}
+
+Ao abrir os detalhes do período (Figura~\ref{fig:periodo-aberto}), a Coordenação
+vê, disciplina a disciplina, o progresso de lançamento de notas e frequência,
+com o percentual de conclusão de cada uma. Esse painel corresponde à verificação
+de pendências prevista no CU-03: o botão ``Bloquear Período'' fica sempre
+disponível, e eventuais pendências de notas ou frequência aparecem apenas como
+aviso, cabendo à Coordenação decidir se bloqueia o período mesmo assim.
+
+\comparativotela{images/tela-cu03-06-periodo-aberto.png}{images/tela-cu03-06-periodo-aberto-mobile.png}%
+{T-04 -- Gestão do período aberto (desktop à esquerda, mobile à direita): progresso por disciplina e ação de bloqueio (RF-26).}{fig:periodo-aberto}
+
+Após o bloqueio, o status do período passa a ``Bloqueado''
+(Figura~\ref{fig:periodo-bloqueado}), a ação de bloqueio é registrada no log de
+auditoria (RF-44) e a opção disponível passa a ser ``Desbloquear Período'',
+executada pela Coordenação quando o Professor solicita correções em notas ou
+frequência já encerradas.
+
+\comparativotela{images/tela-cu03-07-periodo-bloqueado.png}{images/tela-cu03-07-periodo-bloqueado-mobile.png}%
+{T-04 -- Período após o bloqueio (desktop à esquerda, mobile à direita): status ``Bloqueado'' e opção de desbloqueio.}{fig:periodo-bloqueado}
+
+\subsection{Efeito da trava sobre o Professor}
+
+Fechado o círculo do CU-03, o Professor que retornar à tela de lançamento do
+período agora bloqueado (Figura~\ref{fig:notas-bloqueado}) encontra os campos de
+nota desabilitados e as ações de salvar e lançar inativas. O cabeçalho informa a
+data em que o período foi fechado, comunicando claramente o impedimento previsto
+no RF-26. Essa tela é a contraparte da Figura~\ref{fig:notas-aberto} e torna
+visível, na interface, o resultado da trava aplicada pela Coordenação.
+
+\comparativotela{images/tela-cu03-08-notas-bloqueado.png}{images/tela-cu03-08-notas-bloqueado-mobile.png}%
+{T-02 no estado bloqueado (desktop à esquerda, mobile à direita): campos e ações desabilitados pela trava de lançamento (RF-26).}{fig:notas-bloqueado}
+
+\chapter{Especificação e Estratégia de Testes}
+
+\section{Planejamento e níveis de teste}
+
+A estratégia de testes do EduHub contempla três níveis, cada um com um
+objetivo específico dentro do contexto do sistema:
+
+\begin{itemize}
+    \item \textbf{Testes de unidade}: verificam isoladamente regras de
+    negócio críticas do domínio acadêmico, como o cálculo automático de
+    frequência (RF-25), a trava de lançamento por período (RF-26) e a
+    prevenção de conflitos de horário (RF-19). Como essas regras envolvem
+    lógica de decisão relativamente isolada, o teste de unidade é o nível
+    mais eficiente para capturar defeitos nelas o quanto antes.
+    \item \textbf{Testes de integração}: verificam a comunicação entre os
+    módulos do sistema, por exemplo, entre o módulo de autenticação e o de
+    gestão de cargos/permissões, ou entre o módulo de cadastros (turmas,
+    disciplinas, professores) e o módulo acadêmico (notas, frequência), que
+    depende diretamente dos vínculos criados no cadastro.
+    \item \textbf{Testes de sistema}: verificam o comportamento fim a fim das
+    histórias de usuário, sob a perspectiva do usuário final, cobrindo os
+    critérios de aceitação já descritos em cada história (por exemplo, o
+    login em menos de dois segundos, previsto no critério de aceitação da
+    HU-01 e no RNF-01).
+\end{itemize}
+
+Requisitos considerados críticos para a priorização dos testes são a
+autenticação (RF-01, RF-02, RNF-03), o cálculo automático de frequência
+(RF-25), a trava de lançamento de notas e frequência (RF-26) e a prevenção
+de conflitos de horário (RF-19), por afetarem diretamente a integridade dos
+dados acadêmicos e o controle de acesso ao sistema.
+
+\section{Testes de unidade}
+
+As unidades a seguir foram selecionadas por representarem regras de negócio
+com lógica de decisão bem delimitada, derivadas diretamente dos requisitos
+funcionais:
+
+\begin{table}[ht]
+\centering
+\caption{Cenários de teste de unidade derivados dos requisitos funcionais.}
+\begin{tabularx}{\textwidth}{p{0.16\textwidth} X X}
+\toprule
+\textbf{Unidade (RF)} & \textbf{Entrada/condição} & \textbf{Resultado esperado} \\
+\midrule
+Cálculo de percentual de frequência (RF-25) &
+Total de aulas registradas e número de faltas de um aluno em uma disciplina &
+Percentual de frequência calculado corretamente e exibido sem intervenção manual \\
+Validação de conflito de horário (RF-19) &
+Tentativa de atribuir um professor ou uma turma a um horário/sala já ocupado por outro professor ou turma &
+O sistema rejeita a atribuição e sinaliza o conflito, sem alterar os dados existentes \\
+Trava de lançamento por período (RF-26) &
+Tentativa de edição de nota ou frequência em um período marcado como ``travado'' &
+A edição é bloqueada e uma mensagem informa que o período está encerrado \\
+Validação de campos obrigatórios (RF-13) &
+Cadastro de novo usuário com um ou mais campos obrigatórios não preenchidos &
+O sistema impede o salvamento e indica os campos pendentes \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Para unidades que dependem de recursos externos ao próprio módulo, como o
+envio de e-mail de recuperação de senha (RF-02) ou de notificações (RF-36),
+a equipe pretende utilizar substitutos controlados (\textit{stubs} ou
+\textit{mocks}) para isolar a lógica testada do envio real, evitando que a
+disponibilidade de serviços externos interfira no resultado do teste.
+
+\section{Testes de integração}
+
+Os módulos do EduHub, autenticação/autorização, cadastros (usuários,
+turmas, disciplinas, professores), acadêmico (notas e frequência) e
+comunicação (avisos e mensagens), possuem dependências diretas entre si: o
+módulo acadêmico depende dos vínculos criados no módulo de cadastros
+(RF-17), e todos os módulos dependem da autenticação e das permissões de
+cargo (RF-06, RF-10) para autorizar cada ação.
+
+A estratégia adotada é a integração incremental do tipo \textit{bottom-up}:
+os módulos de autenticação e de cadastros, por serem a base sobre a qual os
+demais módulos operam, são testados primeiro, o que também é coerente com
+a ordem que a equipe definiu no planejamento das sprints: a Primeira
+Iteração cobre autenticação e cadastro de usuários, e a Segunda Iteração
+cobre turmas, disciplinas e alocação de professores. Somente após essa base
+estar validada os módulos acadêmico e de comunicação, que dependem dela, são
+integrados e testados.
+
+A cada alteração relevante em um módulo já integrado, testes de regressão
+são reexecutados sobre os módulos que dependem dele, de forma a identificar
+rapidamente efeitos colaterais não previstos. Por exemplo, uma alteração
+na regra de permissões de cargo deve reexecutar os testes de integração dos
+módulos de cadastros e acadêmico, que dependem dela para autorizar ações.
+
+\section{Critérios de conclusão e cobertura}
+
+Uma funcionalidade é considerada testada de forma satisfatória quando todos
+os cenários de teste planejados para os RFs/RNFs associados à respectiva
+história de usuário foram executados, o critério de aceitação descrito na
+história de usuário correspondente (Apêndice~\ref{apx:requisitos}) foi
+verificado, e não há defeito conhecido que bloqueie o critério final da
+sprint em que a história está inserida.
+
+A cobertura de código é utilizada como um indicador complementar do esforço
+de teste, e não como garantia isolada de qualidade. Um código totalmente
+coberto ainda pode conter regras de negócio mal validadas. Como meta
+inicial proposta pela equipe, busca-se cobrir prioritariamente as unidades
+críticas listadas na Seção 5.2. Essa meta poderá ser revisada ao longo do
+projeto.
+
+Além da cobertura, a estratégia de testes se relaciona com as métricas de
+produto e de uso que a equipe definiu na etapa de requisitos. Do lado do
+produto, o acompanhamento do acoplamento entre classes (CBO), da coesão dos
+métodos (LCOM) e da complexidade ciclomática ajuda a identificar trechos de
+código mais difíceis de testar e manter. Do lado do uso, a taxa de sucesso,
+o tempo de conclusão de tarefas e o questionário SUS (\textit{System
+Usability Scale}) complementam os testes automatizados ao avaliar a
+experiência real do usuário nos fluxos descritos no Capítulo 4.
+
+\section{Automação e ferramentas}
+
+A execução dos testes de unidade e de integração e a
+geração de relatórios de resultado são automatizadas pela esteira de
+integração contínua do projeto, o GitHub Actions
+(Seção~\ref{sec:build-cicd}), acionada a cada \textit{commit} e
+\textit{pull request}, o que garante a reexecução frequente prevista na
+estratégia de regressão descrita na Seção 5.3. Para as métricas de produto
+definidas pela equipe (CBO, LCOM e complexidade ciclomática), a mesma
+esteira executa uma etapa de análise estática de código. As ferramentas específicas
+de execução de testes e de análise estática dependem da linguagem e do
+\textit{framework} escolhidos para a implementação e são integradas ao GitHub
+Actions por meio de scripts de \textit{build} e teste versionados junto ao
+código.
+
+\chapter{Gestão de Configuração e Manutenção}
+
+\section{Repositório e itens de configuração}\label{sec:config-repo}
+
+A gestão do Scrumban adotado pela equipe é feita no Taiga, utilizado para
+o rastreamento do product backlog e das sprints, e o código-fonte é
+versionado no GitHub, que funciona como repositório central do projeto, com o
+Git como sistema de controle de versão.
+
+O versionamento no GitHub segue um modelo de branches inspirado no Git Flow,
+com dois branches de longa duração: a \texttt{main}, que reflete o código em
+produção, e a \texttt{develop}, que reúne o trabalho já integrado e serve de
+base para o ambiente de homologação. Cada nova funcionalidade ou correção é
+desenvolvida em um branch próprio de curta duração (\texttt{feature/*}),
+criado a partir da \texttt{develop}, e retorna a ela por meio de um
+\textit{pull request} (PR) revisado. Quando o conteúdo da \texttt{develop}
+está estável e validado, ele é promovido para a \texttt{main}, caracterizando
+uma nova entrega em produção.
+
+Os seguintes itens de configuração precisam ser controlados ao longo do
+projeto:
+
+\begin{itemize}
+    \item código-fonte do sistema;
+    \item documentação do projeto, incluindo o documento de requisitos (ES1)
+    e este documento de projeto (ES2);
+    \item modelos e diagramas (diagrama de classes e diagramas de caso de
+    uso);
+    \item testes (de unidade, integração e sistema, conforme o Capítulo 5);
+    \item arquivos de configuração do sistema;
+    \item o product backlog e as histórias de usuário, mantidos no Taiga.
+\end{itemize}
+
+\section{Gestão de dependências e alterações}
+
+O projeto possui uma dependência externa relevante (D-1): a alocação e
+configuração de um servidor de produção pela equipe de TI da instituição de
+ensino. Como essa dependência está fora do controle direto da equipe de
+desenvolvimento, ela é acompanhada como um risco de cronograma para a fase
+de implantação, e não como um item versionado pela equipe.
+
+Para as alterações internas ao sistema, a arquitetura modular exigida pelo
+RNF-07, que prevê que novos recursos possam ser adicionados sem impactar
+negativamente os módulos existentes, limita o alcance de cada alteração a
+um módulo (ou a poucos módulos relacionados), reduzindo o risco de efeitos
+colaterais quando uma história de usuário é implementada.
+
+A coerência entre código, testes e documentação é mantida pelo próprio
+processo Scrumban adotado pela equipe: o product backlog é um artefato
+vivo, refinado continuamente, de modo que qualquer
+alteração de escopo em uma história de usuário é refletida no backlog antes
+de ser implementada, evitando divergência entre o que está documentado e o
+que é efetivamente desenvolvido e testado.
+
+\section{Rastreabilidade}
+
+A rastreabilidade no EduHub segue a cadeia definida na própria estrutura da
+especificação de requisitos (Apêndice~\ref{apx:requisitos}): requisitos
+funcionais/não funcionais (RFs/RNFs) são agrupados em histórias de usuário,
+cada uma listando explicitamente os ``RFs/RNFs associados'', e as histórias
+de usuário são alocadas pela equipe às sprints do product backlog. A tabela a seguir
+ilustra essa cadeia com dois exemplos concretos:
+
+\begin{table}[ht]
+\centering
+\caption{Exemplos de rastreabilidade entre requisitos, histórias de usuário e sprints.}
+\begin{tabularx}{\textwidth}{p{0.24\textwidth} X p{0.14\textwidth}}
+\toprule
+\textbf{Requisitos (RFs/RNFs)} & \textbf{História(s) de usuário} & \textbf{Sprint} \\
+\midrule
+RF-01, RF-02, RF-05 & HU-01 (Autenticação e Segurança) & 1\textsuperscript{a} Iteração \\
+RF-15, RF-17 & HU-08 (Criação de Turmas e Disciplinas), HU-09 (Alocação de Professores) & 2\textsuperscript{a} Iteração \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{\textit{Build}, integração e entrega}\label{sec:build-cicd}
+
+O processo de entrega do EduHub seguirá o modelo Scrumban adotado
+pelo projeto: entregas incrementais ao final de cada sprint de 14 dias, cada
+uma correspondendo a um incremento funcional do produto, conforme o critério
+final que a equipe define para cada sprint no planejamento. Por exemplo, a Primeira
+Iteração tem como critério final permitir login e o cadastro de ao menos um
+usuário professor. A automação de \textit{build}, integração contínua e
+entrega (CI/CD) é realizada no GitHub, por meio do GitHub Actions, apoiada no
+modelo de branches descrito na Seção~\ref{sec:config-repo}. A integração
+contínua (CI) é acionada a cada \textit{commit} e a cada \textit{pull request},
+executando o \textit{build} do sistema, os testes automatizados de unidade e
+integração descritos no Capítulo 5 e a análise estática de código. Um
+\textit{pull request} só é incorporado à \texttt{develop} quando essa
+verificação passa, o que impede que código defeituoso avance. A entrega
+contínua (CD) é acionada nas integrações aos branches de ambiente: ao chegar à
+\texttt{develop}, a versão é publicada automaticamente no ambiente de
+homologação, usado para validação antes da produção, e, ao ser promovida para
+a \texttt{main}, é implantada no ambiente de produção.
+
+\chapter*{Controle de Versões do Documento}
+\addcontentsline{toc}{chapter}{Controle de Versões do Documento}
+
+Esta seção registra o histórico de alterações significativas deste
+documento de projeto. O versionamento do software em si é tratado no
+Capítulo 6, na Seção de \textit{Build}, integração e entrega.
+
+\begin{table}[ht]
+\centering
+\caption{Histórico de versões do documento.}
+\begin{tabularx}{0.95\textwidth}{p{0.21\textwidth} p{0.19\textwidth} p{0.12\textwidth} X}
+\toprule
+\textbf{Data} & \textbf{Autor(es)} & \textbf{Versão} & \textbf{Alteração} \\
+\midrule
+25/08/2026 & Equipe EduHub & 1.0 & Versão inicial da documentação de projeto (ES2), consolidada a partir do documento de requisitos (ES1). \\
+\bottomrule
+\end{tabularx}
+\end{table}

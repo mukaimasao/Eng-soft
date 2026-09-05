@@ -1,0 +1,534 @@
+\chapter{Especificação Detalhada de Requisitos}\label{apx:requisitos}
+
+Este apêndice apresenta a especificação completa de requisitos do EduHub,
+elaborada pela própria equipe no Documento de Especificação de Requisitos de
+Software (SRS) do projeto: os 45 requisitos funcionais, os 10 requisitos não
+funcionais, as 18 histórias de usuário e os 3 casos de uso que representam o
+escopo inicial do sistema.
+
+\section{Requisitos Funcionais}
+
+\subsection{Acesso e Autenticação}
+
+\begin{xltabular}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\caption{Requisitos funcionais -- Acesso e Autenticação.}\label{tab:rf-acesso}\\
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RF-01 & Autenticação por Credencial & Alta & O sistema deve apresentar uma interface de login onde qualquer usuário pode se autenticar utilizando seu e-mail e uma senha. \\
+RF-02 & Recuperação de Senha & Média & O sistema deve permitir que o usuário solicite a recuperação de senha através do envio de um link ou código de redefinição para o seu e-mail cadastrado. \\
+RF-03 & Visualização de Perfil Próprio & Baixa & Qualquer usuário autenticado deve ser capaz de acessar e visualizar seus próprios dados cadastrais e de contato. \\
+RF-04 & Alteração de Dados Pessoais & Média & O usuário deve ser capaz de alterar dados de seu perfil pessoal, exceto o e-mail. \\
+RF-05 & Registro de Histórico de Login & Baixa & O sistema deve registrar o histórico de login de todos os usuários, incluindo data, hora e o endereço IP de acesso, para fins de segurança e auditoria. \\
+RF-06 & Associação de Cargo & Alta & No momento da criação, todo novo usuário deve ser obrigatoriamente associado a um cargo específico que define suas permissões e hierarquia. \\
+RF-07 & Designação de Cargo & Alta & O usuário com permissão administrativa deve ser capaz de designar (ou alterar) o cargo de qualquer outro usuário do sistema. \\
+RF-08 & Criação e Hierarquia de Cargos & Alta & O cliente (Administrativo) deve ser capaz de criar novos cargos personalizados e definir o nível de hierarquia associado a cada um. \\
+RF-09 & Cargos Padrões do Sistema & Média & O sistema deve conter cargos padrões que não podem ser excluídos, mas que podem ter seus nomes de exibição alterados pelo cliente. \\
+RF-10 & Definição de Permissões Específicas & Alta & O cliente (administrativo) deve ser capaz de definir permissões específicas para cada cargo criado ou padrão. \\
+RF-11 & Alteração de Dados de Terceiros & Média & O usuário com permissão administrativa deve ser capaz de alterar os dados cadastrais e de perfil de qualquer outro usuário do sistema. \\
+RF-12 & Exclusão/Inativação de Usuários & Baixa & O usuário com permissão administrativa deve ser capaz de excluir (ou inativar) usuários do sistema, exigindo uma confirmação da ação antes da exclusão permanente. \\
+RF-13 & Preenchimento Obrigatório & Alta & O sistema deve exigir o preenchimento de campos obrigatórios para o cadastro de qualquer novo usuário. \\
+\end{xltabular}
+
+\subsection{Gestão e Estrutura}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos funcionais -- Gestão e Estrutura.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+RF-14 & Gestão de Dados da Escola & Alta & O usuário administrativo deve ser capaz de cadastrar e atualizar os dados da escola no sistema, incluindo nome, endereço e informações de contato. \\
+RF-15 & Criação de Turmas e Disciplinas & Média & O usuário administrativo deve ser capaz de criar, editar e desativar registros de turmas e disciplinas. \\
+RF-16 & Configuração de Horários & Baixa & O usuário administrativo deve ser capaz de configurar os horários de funcionamento da escola (turnos e dias letivos) e definir o calendário acadêmico com eventos, feriados e datas importantes. \\
+RF-17 & Vínculo Professor-Disciplina & Média & O usuário administrativo deve ser capaz de vincular professores a turmas e disciplinas específicas, definindo quais matérias o docente está autorizado a lecionar. \\
+RF-18 & Busca Avançada de Cadastros & Baixa & O sistema deve permitir ao administrativo a busca por alunos, professores, turmas, disciplinas e salas utilizando filtros como nome, ID/matrícula, ano/semestre ou cargo. \\
+RF-19 & Restrição de Conflito de Horário & Baixa & O sistema deve impedir a atribuição de dois professores ou duas turmas diferentes ao mesmo horário e mesma sala de aula, exibindo uma mensagem de erro em caso de conflito. \\
+RF-20 & Gestão de Períodos de Matrícula & Baixa & O cliente (administrativo) deve ser capaz de abrir e encerrar períodos de matrícula e de revalidação de matrícula no sistema. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Gestão Acadêmica}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos funcionais -- Gestão Acadêmica.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+RF-21 & Acesso à Disciplina e Turma & Baixa & O professor deve ter acesso exclusivo para visualizar a lista de alunos e a estrutura de notas apenas para as turmas e disciplinas às quais está vinculado. \\
+RF-22 & Lançamento de Notas & Alta & O professor deve ser capaz de inserir as notas parciais e finais de cada aluno, por disciplina e por período letivo, através de uma interface clara. \\
+RF-23 & Edição de Notas & Média & O professor deve ser capaz de editar notas inseridas, desde que o período de lançamento/edição não tenha sido travado pela administração. \\
+RF-24 & Registro de Frequência & Alta & O professor deve ser capaz de registrar a presença (Frequente), falta (Ausente) ou justificativa de ausência de cada aluno, por data e por aula/período. \\
+RF-25 & Cálculo Automático de Faltas & Alta & O sistema deve calcular e exibir automaticamente o total de faltas e o percentual de frequência do aluno em cada disciplina. \\
+RF-26 & Trava de Lançamento & Baixa & O sistema deve permitir ao usuário administrativo travar o lançamento de notas e frequência por período letivo, impedindo qualquer alteração posterior pelos Professores. \\
+RF-27 & Visualização de Detalhes do Aluno & Baixa & O professor deve ser capaz de visualizar, a partir da lista de chamada, os detalhes de contato (telefone, e-mail) do aluno, conforme cadastrado pelo administrativo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Informação e Consulta do Aluno}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos funcionais -- Informação e Consulta do Aluno.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+RF-28 & Consulta ao Boletim Individual & Alta & O aluno deve ser capaz de visualizar seu boletim completo, exibindo as notas parciais e finais de todas as disciplinas, organizado por período letivo. \\
+RF-29 & Consulta Detalhada de Frequência & Baixa & O aluno deve ser capaz de visualizar o detalhe de sua frequência em cada disciplina, incluindo a data das faltas e o percentual acumulado de presença. \\
+RF-30 & Visualização da Grade de Horários & Média & O aluno deve ser capaz de consultar sua grade de horários de aula semanal, exibindo a disciplina e o nome do professor para cada bloco de horário. \\
+RF-31 & Informações do Professor & Baixa & Ao consultar uma disciplina, o aluno deve ser capaz de visualizar o nome completo e o e-mail institucional do professor responsável por aquela matéria. \\
+RF-32 & Consulta ao Calendário Acadêmico & Média & O aluno deve ser capaz de visualizar o calendário acadêmico publicado pela administração, incluindo feriados, datas de provas e eventos importantes. \\
+RF-33 & Solicitação de Documentos & Alta & O aluno deve ser capaz de iniciar e submeter uma solicitação formal por documentos através de um formulário no sistema. \\
+RF-34 & Acompanhamento de Solicitações & Baixa & O aluno deve ser capaz de visualizar o status de suas solicitações de documentos. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Comunicação e Notificações}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos funcionais -- Comunicação e Notificações.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+RF-35 & Envio de Comunicados (Admin) & Alta & O usuário administrativo deve ser capaz de criar, redigir e enviar comunicados ou avisos a grupos específicos de usuários. \\
+RF-36 & Envio de Notificações por E-mail & Média & O sistema deve enviar notificações por e-mail para eventos importantes e configuráveis. \\
+RF-37 & Caixa de Entrada do Aluno & Alta & O aluno deve ter uma caixa de entrada no sistema para receber e visualizar todos os comunicados e mensagens enviadas pela administração. \\
+RF-38 & Criação de Mensagem do Aluno & Média & O aluno deve ser capaz de iniciar e enviar uma nova mensagem de consulta à administração através de um formulário. \\
+RF-39 & Tags de Assunto Obrigatórias & Baixa & O sistema deve exigir que o aluno selecione uma tag de assunto predefinida ao enviar uma mensagem para a administração. \\
+RF-40 & Roteamento de Mensagens por Tag & Baixa & O sistema deve rotear a mensagem do aluno, baseada na tag de assunto selecionada, para a equipe administrativa responsável. \\
+RF-41 & Registro de Histórico de Mensagens & Baixa & O sistema deve manter o registro e o histórico de todas as mensagens trocadas entre alunos e a administração, acessível apenas por usuários administrativos com permissão. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Relatórios e Auditoria}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos funcionais -- Relatórios e Auditoria.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.20\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Prioridade} & \textbf{Descrição} \\
+\midrule
+RF-42 & Geração de Relatórios Acadêmicos & Baixa & O sistema deve permitir ao administrativo gerar relatórios consolidados sobre frequência e desempenho dos alunos, com opções de filtro por turma, disciplina e período letivo. \\
+RF-43 & Exportação de Relatórios & Baixa & Os relatórios gerados devem poder ser exportados no formato de arquivo PDF. \\
+RF-44 & Log de Alterações & Baixa & O sistema deve manter um registro (log) de todas as alterações feitas em dados cadastrais críticos. \\
+RF-45 & Consulta ao Log de Auditoria & Baixa & Apenas usuários com permissão de administrador devem ser capazes de consultar e filtrar o documento de log. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Requisitos Não Funcionais}
+
+\subsection{Desempenho}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos não funcionais -- Desempenho.}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição} \\
+\midrule
+RNF-01 & Tempo de Resposta Crítica & O tempo de resposta para qualquer operação crítica deve ser inferior a 2 segundos em condições normais de uso. \\
+RNF-02 & Capacidade de Transação & O sistema deve ser capaz de processar até 10.000 transações por minuto durante períodos de pico. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Segurança}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos não funcionais -- Segurança.}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição} \\
+\midrule
+RNF-03 & Criptografia de Dados Sensíveis & O sistema deve criptografar em repouso todos os dados cadastrais que envolvem documentos e informações pessoais (incluindo senhas e e-mails). \\
+RNF-04 & Autenticação de Dois Fatores (2FA) & O sistema deve oferecer suporte opcional para autenticação de dois fatores (2FA) para os perfis de administrativo e docente. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Confiabilidade e Disponibilidade}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos não funcionais -- Confiabilidade e Disponibilidade.}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição} \\
+\midrule
+RNF-05 & Disponibilidade Mínima & O sistema deve ter uma disponibilidade mínima de 99\% por ano. \\
+RNF-06 & Backups e Restauração & O sistema deve realizar backups automáticos diários de todos os dados e ser capaz de restaurar o sistema completamente a partir de um backup. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Manutenibilidade e Portabilidade}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos não funcionais -- Manutenibilidade e Portabilidade.}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição} \\
+\midrule
+RNF-07 & Arquitetura Modular & O sistema deve ser desenvolvido com uma arquitetura modular, permitindo que novos recursos e funcionalidades sejam adicionados sem impactar negativamente a operação dos módulos existentes. \\
+RNF-08 & Suporte a Múltiplas Plataformas & O software deve funcionar corretamente em todas as plataformas mais utilizadas: Web (Chrome, Firefox, Safari), Windows e macOS; a solução deve ser uma aplicação web responsiva que funcione bem nesses ambientes. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Usabilidade e Acessibilidade}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos não funcionais -- Usabilidade e Acessibilidade.}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição} \\
+\midrule
+RNF-09 & Intuitividade da Interface & A interface do usuário deve ser intuitiva, com navegação clara e fácil, adaptada ao nível de proficiência e necessidades dos perfis de usuário (Aluno, Professor, Administrativo). \\
+RNF-10 & Acessibilidade & O sistema deve ser acessível para pessoas com deficiência, atendendo às diretrizes WCAG 2.1. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Histórias de Usuário}
+
+As histórias de usuário a seguir representam os requisitos funcionais e não
+funcionais sob a perspectiva do usuário, agrupadas conforme os módulos do
+sistema. Elas representam o escopo inicial do projeto; outras histórias
+serão definidas e implementadas de forma incremental conforme o
+desenvolvimento progredir. A Tabela~\ref{tab:hu-resumo} apresenta um resumo
+de todas as 18 histórias, seguida do detalhamento de cada uma (história e
+critério de aceitação).
+
+\begin{xltabular}{\textwidth}{p{0.07\textwidth} p{0.25\textwidth} p{0.14\textwidth} p{0.14\textwidth} X}
+\caption{Resumo das histórias de usuário.}\label{tab:hu-resumo}\\
+\toprule
+\textbf{ID} & \textbf{Título} & \textbf{Prioridade} & \textbf{Estimativa} & \textbf{RFs/RNFs associados} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Título} & \textbf{Prioridade} & \textbf{Estimativa} & \textbf{RFs/RNFs associados} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+HU-01 & Autenticação e Segurança & Alta & 5 dias & RF-01, RF-02, RF-05, RNF-01, RNF-03, RNF-04 \\
+HU-02 & Gestão de Dados Pessoais e Perfil & Média & 2 dias & RF-03, RF-04 \\
+HU-03 & Criação e Manutenção de Usuários & Alta & 4 dias & RF-06, RF-11, RF-12, RF-13 \\
+HU-04 & Criação e Gestão de Cargos & Alta & 3 dias & RF-08, RF-09, RF-10 \\
+HU-05 & Atribuição de Cargo ao Usuário & Média & 1 dia & RF-07 \\
+HU-06 & Gestão da Escola e Infraestrutura & Média & 1 dia & RF-14, RF-15 \\
+HU-07 & Configuração do Período Acadêmico & Média & 2 dias & RF-16, RF-20 \\
+HU-08 & Criação de Turmas e Disciplinas & Alta & 4 dias & RF-15 \\
+HU-09 & Alocação de Professores & Alta & 4 dias & RF-17 \\
+HU-10 & Prevenção de Conflitos de Agendamento & Média & 3 dias & RF-19 \\
+HU-11 & Busca e Pesquisa de Cadastros & Alta & 2 dias & RF-18 \\
+HU-12 & Visualização de Turmas e Acesso & Alta & 2 dias & RF-21, RNF-01 \\
+HU-13 & Lançamento e Edição de Notas & Alta & 6 dias & RF-22, RF-23, RF-26, RNF-02 \\
+HU-14 & Registro Diário de Frequência & Alta & 4 dias & RF-24, RF-25, RNF-02 \\
+HU-15 & Consulta Rápida de Contato do Aluno & Alta & 1 dia & RF-27 \\
+HU-16 & Consulta Detalhada do Desempenho & Média & 3 dias & RF-28, RF-29, RNF-01 \\
+HU-17 & Visualização da Grade e Calendário & Média & 3 dias & RF-30, RF-31, RF-32 \\
+HU-18 & Solicitação e Acompanhamento de Documentos & Média & 3 dias & RF-33, RF-34 \\
+\end{xltabular}
+
+\subsection{Histórias de Usuário sobre Acesso e Autenticação}
+
+\paragraph{HU-01 -- Autenticação e Segurança.}
+\textit{História:} Como um usuário, eu quero fazer login no sistema de forma
+segura e rápida, e poder recuperar a senha se necessário, para que eu possa
+acessar minhas informações em menos de um segundo.
+\textit{Critério de Aceitação:} O usuário deve conseguir logar em menos de 2
+segundos (RNF-01). O link de recuperação deve ser enviado. O histórico de
+login deve ser registrado (RF-05).
+
+\paragraph{HU-02 -- Gestão de Dados Pessoais e Perfil.}
+\textit{História:} Como um usuário, eu quero acessar minha página de perfil
+e atualizar minhas informações de contato e senha, para que meus dados
+pessoais estejam sempre corretos e atualizados.
+\textit{Critério de Aceitação:} O usuário deve visualizar todos os seus
+dados (RF-03) e conseguir alterar campos editáveis (exceto e-mail) com
+sucesso. A nova senha deve ser salva criptografada.
+
+\paragraph{HU-03 -- Criação e Manutenção de Usuários.}
+\textit{História:} Como um administrativo, eu quero cadastrar, alterar
+dados de terceiros e inativar usuários (alunos e professores), para que eu
+possa gerenciar o acesso à plataforma e manter o cadastro da escola
+atualizado.
+\textit{Critério de Aceitação:} O administrativo consegue cadastrar um novo
+usuário (RF-13) e a associação a um cargo (RF-06) é obrigatória. O
+administrativo deve conseguir alterar dados (RF-11) e excluir/inativar
+(RF-12) qualquer usuário.
+
+\paragraph{HU-04 -- Criação e Gestão de Cargos.}
+\textit{História:} Como um administrativo, eu quero criar novos cargos
+personalizados, hierarquizá-los e especificar quais permissões cada cargo
+possui, para que eu possa atender às necessidades de segurança e funções
+específicas da escola.
+\textit{Critério de Aceitação:} O administrativo consegue criar um novo
+cargo (RF-08) e customizar as permissões (RF-10). Cargos padrões (RF-09)
+não podem ser excluídos.
+
+\paragraph{HU-05 -- Atribuição de Cargo ao Usuário.}
+\textit{História:} Como um administrativo, eu quero designar ou mudar o
+cargo de um usuário existente, para que eu possa controlar o nível de
+acesso dele ao sistema de acordo com sua função atual.
+\textit{Critério de Aceitação:} O administrativo deve conseguir alterar o
+cargo de um usuário (RF-07) e as permissões de acesso do usuário devem ser
+atualizadas imediatamente com base no novo cargo.
+
+\subsection{Histórias de Usuário sobre Gestão e Estrutura}
+
+\paragraph{HU-06 -- Gestão da Escola e Infraestrutura.}
+\textit{História:} Como um administrativo, eu quero cadastrar e atualizar
+os dados da escola.
+\textit{Critério de Aceitação:} O administrativo deve conseguir cadastrar
+(RF-14) e editar os dados da escola.
+
+\paragraph{HU-07 -- Configuração do Período Acadêmico.}
+\textit{História:} Como um administrativo, eu quero definir os horários de
+funcionamento, criar o calendário acadêmico e gerenciar os períodos de
+matrícula, para que o ano letivo esteja formalmente estruturado.
+\textit{Critério de Aceitação:} O administrativo deve conseguir configurar
+os horários de turnos, cadastrar eventos no calendário (RF-16) e
+abrir/encerrar períodos de matrícula (RF-20).
+
+\paragraph{HU-08 -- Criação de Turmas e Disciplinas.}
+\textit{História:} Como um administrativo, eu quero criar, editar e
+desativar turmas e disciplinas, para que a estrutura curricular esteja
+atualizada antes do início das aulas.
+\textit{Critério de Aceitação:} O administrativo consegue criar, editar e
+desativar turmas e disciplinas (RF-15).
+
+\paragraph{HU-09 -- Alocação de Professores.}
+\textit{História:} Como um administrativo, eu quero vincular um professor a
+turmas e disciplinas específicas, para que ele tenha permissão para
+lançar notas e frequência.
+\textit{Critério de Aceitação:} O administrativo deve conseguir atribuir um
+professor a uma ou mais disciplinas (RF-17).
+
+\paragraph{HU-10 -- Prevenção de Conflitos de Agendamento.}
+\textit{História:} Como um administrativo, eu quero ser alertado quando
+houver conflitos de sala ou professor ao montar a grade de horários, para
+que a grade de aulas seja logicamente válida.
+\textit{Critério de Aceitação:} O sistema deve impedir (e exibir erro) a
+atribuição de dois professores ou turmas diferentes ao mesmo horário e sala
+(RF-19).
+
+\paragraph{HU-11 -- Busca e Pesquisa de Cadastros.}
+\textit{História:} Como um administrativo, eu quero buscar por qualquer
+cadastro (aluno, professor, turma) usando vários filtros (nome, ID, ano),
+para que eu possa encontrar informações rapidamente e gerenciar os dados.
+\textit{Critério de Aceitação:} A busca deve retornar resultados filtrando
+por nome, ID/matrícula, ano/semestre ou cargo (RF-18).
+
+\subsection{Histórias de Usuário sobre Gestão Acadêmica}
+
+\paragraph{HU-12 -- Visualização de Turmas e Acesso.}
+\textit{História:} Como um professor, eu quero acessar rapidamente a lista
+de turmas e disciplinas que leciono, para que eu possa iniciar o
+lançamento de dados acadêmicos (notas e frequência).
+\textit{Critério de Aceitação:} O professor deve ver apenas as turmas e
+disciplinas vinculadas a ele (RF-21). O acesso deve ser rápido (RNF-01).
+
+\paragraph{HU-13 -- Lançamento e Edição de Notas.}
+\textit{História:} Como um professor, eu quero inserir e editar as notas
+parciais e finais dos alunos em minhas disciplinas, para que o boletim do
+aluno seja atualizado com precisão.
+\textit{Critério de Aceitação:} O professor deve conseguir inserir e editar
+todas as notas (RF-22, RF-23). A edição deve ser bloqueada se o período
+estiver travado (RF-26).
+
+\paragraph{HU-14 -- Registro Diário de Frequência.}
+\textit{História:} Como um professor, eu quero registrar a presença, falta
+ou justificativa de ausência dos alunos em minhas aulas, para que o
+controle de frequência esteja correto e em dia.
+\textit{Critério de Aceitação:} O professor deve conseguir registrar o
+status de frequência por aluno e data (RF-24). O sistema deve calcular
+automaticamente as faltas e percentuais (RF-25).
+
+\paragraph{HU-15 -- Consulta Rápida de Contato do Aluno.}
+\textit{História:} Como um professor, eu quero visualizar os dados de
+contato dos alunos que leciono, para que eu possa comunicar urgências ou
+dúvidas pontuais.
+\textit{Critério de Aceitação:} O sistema deve exibir os detalhes de
+contato (telefone, e-mail) do aluno e responsável na interface de gestão
+(RF-27).
+
+\subsection{Histórias de Usuário sobre Informação e Consulta do Aluno}
+
+\paragraph{HU-16 -- Consulta Detalhada do Desempenho.}
+\textit{História:} Como um aluno, eu quero acessar meu boletim com notas e
+o detalhe da minha frequência em cada disciplina, para que eu possa
+monitorar meu desempenho e presença.
+\textit{Critério de Aceitação:} O aluno deve visualizar notas (RF-28) e o
+percentual de faltas e datas (RF-29). O tempo de consulta deve ser rápido
+(RNF-01).
+
+\paragraph{HU-17 -- Visualização da Grade e Calendário.}
+\textit{História:} Como um aluno, eu quero consultar minha grade de
+horários, o calendário acadêmico e as informações do meu professor, para
+que eu possa me organizar para as aulas e eventos.
+\textit{Critério de Aceitação:} O aluno deve conseguir visualizar a grade
+de horários completa (RF-30) e o calendário (RF-32), incluindo informações
+de contato do professor (RF-31).
+
+\paragraph{HU-18 -- Solicitação e Acompanhamento de Documentos.}
+\textit{História:} Como aluno, eu quero solicitar documentos formais (ex:
+histórico escolar) pelo sistema e acompanhar o status dessa solicitação,
+para que eu não precise ir pessoalmente à Secretaria.
+\textit{Critério de Aceitação:} O aluno deve conseguir submeter um
+formulário de solicitação (RF-33) e verificar se o status está ``Em
+Análise'', ``Aprovado'' ou ``Atendido'' (RF-34).
+
+\section{Casos de Uso}
+
+Os casos de uso a seguir fornecem uma descrição narrativa detalhada das
+interações entre os atores (usuário, professor e administrativo) e o
+sistema, com foco nas funcionalidades críticas ou mais complexas do
+sistema. Representam o foco inicial do projeto, sendo que outros serão
+refinados e implementados de forma incremental conforme o desenvolvimento
+progredir. Os casos de uso CU-01 e CU-02 contam com diagramas de caso de uso
+UML elaborados na fase de modelagem (Figuras~\ref{fig:cu01} e~\ref{fig:cu02});
+para o CU-03 não foi produzido diagrama próprio nessa fase, sendo descrito
+apenas de forma textual.
+
+\subsection*{CU-01 -- Designar Cargo de Usuário}
+
+\begin{tabularx}{\textwidth}{p{0.22\textwidth} X}
+\toprule
+\textbf{Ator Primário} & Usuário Administrativo \\
+\textbf{Ator Secundário} & Usuário comum (Professor, Aluno, etc.) \\
+\textbf{Pré-condições} & O administrador está logado no sistema. O usuário-alvo está cadastrado e existe no sistema. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Fluxo Principal:}
+\begin{enumerate}[nosep]
+    \item O Administrador acessa a funcionalidade de Gestão de Usuários.
+    \item O Administrador busca e seleciona o usuário desejado.
+    \item O Sistema exibe os detalhes do usuário.
+    \item O Administrador seleciona o novo Cargo/Função (ex: Professor, Coordenador) a ser atribuído.
+    \item O Sistema valida o Cargo/Função.
+    \item O Sistema atualiza o perfil do usuário (RF-07).
+    \item O Sistema registra a alteração no Log de Auditoria (RF-44) e exibe uma mensagem de confirmação.
+\end{enumerate}
+
+\textbf{Fluxos Alternativos:}
+\begin{itemize}[nosep]
+    \item \textit{2.a.1.} O Sistema informa que o usuário buscado não foi encontrado (RF-18).
+    \item \textit{4.a.1.} O Administrador tenta atribuir um cargo que não existe ou que é logicamente inválido.
+    \item \textit{4.a.2.} O Sistema rejeita a ação e exibe uma mensagem de erro.
+\end{itemize}
+
+\textbf{Pós-condições:} O usuário-alvo tem o novo cargo/função designado. As
+permissões de acesso do usuário são imediatamente atualizadas conforme o
+novo cargo (RF-10).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{diagrama-cu01.png}
+\caption{Diagrama de caso de uso CU-01 -- Designar Cargo de Usuário. Fonte:
+elaboração própria da equipe.}
+\label{fig:cu01}
+\end{figure}
+
+\subsection*{CU-02 -- Alocar Professor/Turma e Prevenir Conflito}
+
+\begin{tabularx}{\textwidth}{p{0.22\textwidth} X}
+\toprule
+\textbf{Ator Primário} & Usuário Administrativo \\
+\textbf{Ator Secundário} & Usuário Professor \\
+\textbf{Pré-condições} & O Administrativo está autenticado e a Sala, Turma e Professor já estão cadastrados. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Fluxo Principal:}
+\begin{enumerate}[nosep]
+    \item O Administrativo acessa a tela de Configuração de Horários.
+    \item O Administrativo seleciona a Turma, a Disciplina, o Professor, a Sala e o Horário (dia/período).
+    \item O Sistema verifica se a Sala está disponível naquele horário para a Turma (RF-19).
+    \item O Sistema verifica se o Professor está disponível naquele horário (RF-19).
+    \item As verificações são aprovadas e o Administrativo salva o vínculo (RF-17).
+\end{enumerate}
+
+\textbf{Fluxos Alternativos:}
+\begin{itemize}[nosep]
+    \item \textit{3.a.1.} O Sistema detecta que a Sala já está ocupada por outra Turma ou Professor no mesmo horário.
+    \item \textit{3.a.2.} O Sistema exibe uma mensagem de erro e lista o agendamento conflitante.
+    \item \textit{4.a.1.} O Sistema detecta que o Professor já está alocado em outra Turma/Sala no mesmo horário.
+    \item \textit{4.a.2.} O Sistema exibe uma mensagem de erro indicando o conflito na agenda do Docente.
+\end{itemize}
+
+\textbf{Pós-condições:} O vínculo Professor-Turma-Disciplina-Sala foi
+criado e a agenda do sistema foi atualizada com sucesso, ou o sistema
+impediu o agendamento e manteve os dados inalterados.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{diagrama-cu02.png}
+\caption{Diagrama de caso de uso CU-02 -- Alocar Professor/Turma e Prevenir
+Conflito. Fonte: elaboração própria da equipe.}
+\label{fig:cu02}
+\end{figure}
+
+\subsection*{CU-03 -- Finalizar e Bloquear Período de Lançamento}
+
+\begin{tabularx}{\textwidth}{p{0.22\textwidth} X}
+\toprule
+\textbf{Ator Primário} & Usuário Administrativo (ou Coordenador) \\
+\textbf{Ator Secundário} & Usuário Professor \\
+\textbf{Pré-condições} & O Administrador está autenticado. O Período Letivo a ser bloqueado existe e está com status ``Aberto''. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Fluxo Principal:}
+\begin{enumerate}[nosep]
+    \item O Administrador/Coordenador acessa a funcionalidade de Gestão de Períodos Letivos.
+    \item O Administrador seleciona o Período Letivo (ex: 1º Semestre de 2026) e escolhe a opção ``Travar Lançamento'' (RF-26).
+    \item O Sistema verifica se há Turmas ou Disciplinas com notas finais ou frequência pendentes e, caso existam, exibe essas pendências como um aviso informativo (ex: ``4 Notas Finais e 2 Lançamentos de Frequência pendentes na disciplina de Matemática 3ºA''), sem impedir a continuação do fluxo.
+    \item O Administrador/Coordenador confirma o bloqueio do Período, mesmo havendo pendências sinalizadas.
+    \item O Sistema altera o status do Período para ``Bloqueado''.
+    \item O Sistema registra o evento no Log de Auditoria (RF-44), incluindo quem fez a ação e a data/hora.
+    \item O Sistema exibe uma mensagem de sucesso.
+\end{enumerate}
+
+\textbf{Fluxos Alternativos:}
+\begin{itemize}[nosep]
+    \item \textit{5.a.1.} Um Professor tenta acessar a tela de Lançamento de Notas para um Período com status ``Bloqueado''.
+    \item \textit{5.a.2.} O Sistema verifica o status ``Bloqueado'' e exibe uma mensagem: ``Período encerrado para lançamentos. Consulte a Coordenação'' (RF-26).
+    \item \textit{7.a.1.} Após o bloqueio, o Professor identifica que ainda precisa lançar ou corrigir uma nota ou frequência.
+    \item \textit{7.a.2.} O Professor solicita à Coordenação o desbloqueio do Período.
+    \item \textit{7.a.3.} A Coordenação acessa a Gestão de Períodos Letivos e seleciona a opção ``Desbloquear Período''.
+    \item \textit{7.a.4.} O Sistema altera o status do Período de volta para ``Aberto'' e registra o evento no Log de Auditoria (RF-44).
+    \item \textit{7.a.5.} O Professor realiza a correção ou o lançamento pendente.
+    \item \textit{7.a.6.} A Coordenação bloqueia o Período novamente, repetindo o Fluxo Principal.
+\end{itemize}
+
+\textbf{Pós-condições:} O status do Período Acadêmico está definido como
+``Bloqueado'' na Base de Dados. Qualquer tentativa de alteração de notas ou
+frequência para este período é negada (RF-26). O Log de Auditoria (RF-44)
+registra a ação de bloqueio. O Período pode ser reaberto pela Coordenação a
+qualquer momento, mediante solicitação do Professor, através da
+funcionalidade de Desbloquear Período.

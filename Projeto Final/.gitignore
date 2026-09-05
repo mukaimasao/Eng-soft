@@ -1,0 +1,16 @@
+# Artefatos de build do LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.lof
+*.lot
+
+# Arquivos de SO / editor
+.DS_Store
+Thumbs.db

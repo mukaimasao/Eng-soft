@@ -1,0 +1,198 @@
+% ============================================================================
+\chapter{Introdução e Objetivos}
+% ============================================================================
+
+O EduHub é um sistema de gestão educacional e comunicação, projetado para ser
+implantado em instituições de ensino públicas ou privadas. Este capítulo
+apresenta o contexto do problema que motiva o desenvolvimento do software, os
+limites do escopo do projeto, uma visão resumida dos requisitos levantados e
+os objetivos de qualidade que orientam as decisões de projeto descritas nos
+capítulos seguintes.
+
+\section{Contexto do software}
+
+\subsection{Propósito}
+
+O propósito do EduHub é estabelecer um canal de comunicação digital e
+fornecer ferramentas de informação entre a instituição de ensino e seus
+alunos, substituindo processos manuais e descentralizados de gestão
+acadêmica por uma plataforma única, segmentada por perfil de usuário.
+
+\subsection{Funções do produto}
+
+O EduHub deve fornecer acesso personalizado e seguro (segmentado por perfil
+administrativo, docente e aluno), um módulo de informação do aluno
+(desempenho acadêmico, notas, frequência e horários), um módulo de gestão
+docente (registro de informações pelo professor) e um módulo de gestão
+administrativa (ferramentas para coordenadores e secretários gerenciarem
+dados da escola).
+
+\subsection{Perspectiva do produto}
+
+O EduHub é um sistema autônomo e independente: não é componente de um
+sistema maior e não requer interfaces operacionais em tempo real com
+sistemas externos. Seus dados primários (cadastro inicial de alunos,
+professores e turmas) são inseridos e gerenciados pela própria interface
+administrativa do sistema. Após a implantação, o EduHub passa a ser a fonte
+primária de dados acadêmicos da instituição.
+
+\subsection{Características dos usuários}
+
+O EduHub é utilizado por três grupos distintos de usuários, cada um com
+necessidades, nível de acesso e expertise próprios, conforme resumido na
+Tabela~\ref{tab:perfis-usuarios}.
+
+\begin{table}[ht]
+\centering
+\caption{Perfis de usuários do EduHub.}
+\label{tab:perfis-usuarios}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth} p{0.10\textwidth} p{0.24\textwidth} X}
+\toprule
+\textbf{Tipo de usuário} & \textbf{Nível de acesso} & \textbf{Expertise requerida} & \textbf{Visão geral} \\
+\midrule
+Administrativo (Coordenadores/Secretários) & Alto & Conhecimento médio de sistemas de gestão & Responsável pela manutenção de cadastros, gestão de turmas, horários e comunicação oficial. \\
+Professores (Docentes) & Médio & Foco pedagógico; requer interface intuitiva & Inserção frequente de dados acadêmicos, como registro de frequência e notas de avaliações. \\
+Alunos & Baixo & Focado na visualização; alta expectativa de acessibilidade móvel & Consulta de informações acadêmicas, como horários, notas e frequência, e recebimento/envio de mensagens via módulo de comunicação. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Escopo}
+
+O EduHub é organizado em módulos que atendem às necessidades específicas dos
+três perfis de usuário. Fazem parte do escopo desta versão inicial:
+
+\begin{itemize}[nosep]
+    \item \textbf{Acesso e autenticação}: login por credenciais, recuperação
+    de senha, gestão de cargos e permissões associados a cada usuário.
+    \item \textbf{Informação do aluno}: consulta de desempenho (notas
+    parciais, finais e histórico), acompanhamento de frequência e consulta
+    de horários, disciplinas e calendário acadêmico.
+    \item \textbf{Gestão docente}: lançamento e edição de notas, registro de
+    frequência e visualização das turmas e alunos vinculados ao professor.
+    \item \textbf{Gestão administrativa}: cadastro de escola, turmas e
+    disciplinas, vínculo professor--disciplina, configuração de horários e
+    calendário acadêmico, gestão de períodos de matrícula, busca avançada de
+    cadastros e geração de relatórios operacionais.
+    \item \textbf{Comunicação}: envio de avisos pela administração, caixa de
+    entrada do aluno e canal bidirecional de mensagens entre aluno e
+    administração, com roteamento por tags de assunto.
+\end{itemize}
+
+Ficam explicitamente fora do escopo desta versão:
+
+\begin{itemize}[nosep]
+    \item \textbf{Gestão financeira}: o EduHub não incluirá, nesta versão,
+    funcionalidades de emissão de boletos, controle de inadimplência ou
+    qualquer gestão de mensalidades e pagamentos.
+    \item \textbf{Escalabilidade para grandes redes}: esta versão inicial
+    não terá arquitetura voltada ao suporte de um número grande de usuários;
+    recursos de escalabilidade e performance para grandes redes escolares
+    ficam fora do escopo.
+\end{itemize}
+
+\section{Visão geral dos requisitos}
+
+Os requisitos do EduHub foram organizados em seis grupos funcionais e cinco
+categorias de requisitos não funcionais. As Tabelas~\ref{tab:rf-resumo}
+e~\ref{tab:rnf-resumo} apresentam uma visão resumida de cada grupo.
+
+\begin{table}[ht]
+\centering
+\caption{Grupos de requisitos funcionais do EduHub.}
+\label{tab:rf-resumo}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth} p{0.14\textwidth} X}
+\toprule
+\textbf{Grupo funcional} & \textbf{RFs} & \textbf{Descrição resumida} \\
+\midrule
+Acesso e Autenticação & RF-01 a RF-13 & Login, recuperação de senha, histórico de acesso e gestão de cargos, hierarquia e permissões. \\
+Gestão e Estrutura & RF-14 a RF-20 & Cadastro da escola, turmas, disciplinas, horários, calendário acadêmico e vínculo professor--disciplina. \\
+Gestão Acadêmica & RF-21 a RF-27 & Lançamento e edição de notas, registro de frequência, cálculo automático de faltas e trava de período letivo. \\
+Informação e Consulta do Aluno & RF-28 a RF-34 & Consulta a boletim, frequência, grade de horários, calendário e solicitação de documentos. \\
+Comunicação e Notificações & RF-35 a RF-41 & Comunicados da administração, notificações por e-mail, caixa de entrada e mensagens com roteamento por tag de assunto. \\
+Relatórios e Auditoria & RF-42 a RF-45 & Geração e exportação de relatórios acadêmicos e log de alterações e auditoria. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Requisitos não funcionais do EduHub.}
+\label{tab:rnf-resumo}
+\begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.26\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição resumida} \\
+\midrule
+RNF-01 & Tempo de resposta & Operações críticas em menos de 2 segundos. \\
+RNF-02 & Capacidade de transação & Até 10.000 transações por minuto em picos. \\
+RNF-03 & Criptografia & Dados sensíveis, senhas e e-mails criptografados em repouso. \\
+RNF-04 & Autenticação de dois fatores & 2FA opcional para os perfis administrativo e docente. \\
+RNF-05 & Disponibilidade & Disponibilidade mínima de 99\% ao ano. \\
+RNF-06 & Backup e restauração & Backups diários com restauração completa do sistema. \\
+RNF-07 & Modularidade & Arquitetura modular que permite evoluir sem impacto entre módulos. \\
+RNF-08 & Portabilidade & Aplicação web responsiva em Chrome, Firefox, Safari, Windows e macOS. \\
+RNF-09 & Usabilidade & Interface intuitiva adaptada ao perfil de cada usuário. \\
+RNF-10 & Acessibilidade & Conformidade com as diretrizes WCAG 2.1. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A especificação detalhada e completa dos requisitos, que inclui todos os
+45 requisitos funcionais, os 10 requisitos não funcionais, as 18 histórias
+de usuário e os casos de uso, encontra-se no Apêndice~\ref{apx:requisitos}.
+
+\section{Objetivos de qualidade}\label{sec:quality-goals}
+
+Os objetivos de qualidade do EduHub foram definidos a partir dos atributos
+de qualidade de produto da norma ISO/IEC 25010 (Figura~\ref{fig:iso25010}),
+selecionando-se apenas os atributos com impacto direto sobre as decisões de
+projeto: manutenibilidade, segurança, usabilidade, confiabilidade,
+portabilidade e desempenho. Cada atributo está diretamente ligado a um ou
+mais requisitos não funcionais levantados na especificação.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{01_2_iso-25010-topics-EN.drawio.png}
+\caption{Características de qualidade de produto da norma ISO/IEC 25010, utilizadas como referência para a seleção dos objetivos de qualidade do EduHub.}
+\label{fig:iso25010}
+\end{figure}
+
+A manutenibilidade é central para o EduHub por se tratar de um sistema
+composto por múltiplos módulos independentes (acesso, gestão acadêmica,
+gestão administrativa e comunicação), o que exige arquitetura modular,
+alta coesão e baixo acoplamento para permitir a adição de novos recursos
+sem impactar os módulos existentes. A segurança é prioritária por lidar com
+dados pessoais de alunos e professores sujeitos à LGPD, exigindo
+criptografia de credenciais e dados sensíveis e a possibilidade de
+autenticação em dois fatores. A usabilidade é fundamental dado o perfil
+heterogêneo dos usuários (do administrativo, com maior expertise, ao aluno,
+focado em consulta rápida via dispositivos móveis), exigindo interfaces
+intuitivas e acessíveis. A confiabilidade garante a continuidade do serviço,
+que passa a ser a fonte primária de dados acadêmicos da instituição após a
+implantação. A portabilidade assegura o funcionamento correto em diferentes
+navegadores e sistemas operacionais, dado que o EduHub é entregue como
+aplicação web responsiva. Por fim, o desempenho é relevante em operações
+críticas, como autenticação e lançamento de notas em períodos de pico
+(por exemplo, fechamento de bimestre).
+
+A Tabela~\ref{tab:objetivos-qualidade} sintetiza esses objetivos, sua
+prioridade e o impacto esperado sobre o projeto.
+
+\begin{table}[ht]
+\centering
+\caption{Objetivos de qualidade do EduHub.}
+\label{tab:objetivos-qualidade}
+\setlength{\tabcolsep}{10pt}
+\begin{tabularx}{\textwidth}{p{0.16\textwidth} p{0.12\textwidth} X}
+\toprule
+\textbf{Objetivo} & \textbf{Prioridade} & \textbf{Impacto esperado no projeto} \\
+\midrule
+Manutenibilidade & Alta & Arquitetura modular que permite adicionar recursos sem impactar módulos existentes, exigindo alta coesão e baixo acoplamento no código (RNF-07). \\
+Segurança & Alta & Criptografia em repouso de dados cadastrais sensíveis, senhas e e-mails (RNF-03), com suporte opcional a autenticação de dois fatores para perfis administrativo e docente (RNF-04). \\
+Desempenho & Alta & Tempo de resposta inferior a 2 segundos em operações críticas (RNF-01) e capacidade de processar até 10.000 transações por minuto em períodos de pico (RNF-02). \\
+Usabilidade & Alta & Interface intuitiva, com navegação clara adaptada ao nível de proficiência de cada perfil de usuário (RNF-09), e acessibilidade conforme WCAG 2.1 (RNF-10). \\
+Confiabilidade & Média & Disponibilidade mínima de 99\% ao ano (RNF-05) e backups automáticos diários com restauração completa do sistema (RNF-06). \\
+Portabilidade & Média & Funcionamento correto como aplicação web responsiva nos principais navegadores (Chrome, Firefox, Safari) e sistemas operacionais (Windows, macOS) (RNF-08). \\
+\bottomrule
+\end{tabularx}
+\end{table}

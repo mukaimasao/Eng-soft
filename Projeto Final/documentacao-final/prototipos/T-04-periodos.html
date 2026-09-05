@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduHub — T-04 Gestão de Períodos Letivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="eduhub.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ARTBOARD 1 — Verificação de pendências ao tentar travar
+     (fluxo alternativo 3.a do CU-03)
+     ============================================================ -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill">ESTADO 1</span> Verificação de pendências ao tentar travar (fluxo alternativo 3.a do CU-03)</div>
+
+  <div class="app" style="position:relative">
+
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">E</div><div class="name">EduHub</div></div>
+      <div class="nav-label">Administração</div>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Início</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Usuários</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg> Turmas e Disciplinas</a>
+      <a class="nav-item active" href="T-04-periodos.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Períodos Letivos</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg> Relatórios</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6Z"/></svg> Auditoria</a>
+      <div class="sidebar-footer">
+        <div class="user-chip"><div class="avatar gray">CN</div><div class="meta"><b>Carlos Nunes</b><span>Coordenação</span></div></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div>
+          <div class="crumbs">EduHub / <b>Períodos Letivos</b></div>
+          <h1>Períodos Letivos</h1>
+        </div>
+        <div class="spacer"></div>
+        <div class="avatar gray">CN</div>
+      </div>
+
+      <div class="content">
+
+        <p class="muted" style="margin-top:0">Trave o lançamento de notas e frequência ao encerrar um período. A ação fica registrada em log de auditoria (RF-44).</p>
+
+        <div class="tbl-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Período</th>
+                <th>Vigência</th>
+                <th class="right">Turmas</th>
+                <th>Status</th>
+                <th class="right">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2º Semestre de 2025</td>
+                <td>01/08/2025 – 20/12/2025</td>
+                <td class="num">24</td>
+                <td><span class="badge badge-locked"><span class="dot"></span>Bloqueado</span></td>
+                <td class="right"><button class="btn btn-ghost btn-sm">Ver detalhes</button></td>
+              </tr>
+              <tr style="background:var(--brand-050)">
+                <td><b>1º Semestre de 2026</b></td>
+                <td>03/02/2026 – 12/07/2026</td>
+                <td class="num">26</td>
+                <td><span class="badge badge-open"><span class="dot"></span>Aberto</span></td>
+                <td class="right">
+                  <button class="btn btn-lock btn-sm">
+                    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                    Travar lançamento
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2º Semestre de 2026</td>
+                <td>01/08/2026 – 19/12/2026</td>
+                <td class="num">0</td>
+                <td><span class="badge badge-neutral"><span class="dot"></span>Não iniciado</span></td>
+                <td class="right"><button class="btn btn-secondary btn-sm" disabled>Travar</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modal: bloqueio impedido por pendências -->
+    <div class="modal-scrim" style="position:absolute">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="m-ic warn">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          </div>
+          <div>
+            <h2>Não é possível travar o período</h2>
+            <p>Há lançamentos pendentes no 1º Semestre de 2026. Resolva as pendências antes de encerrar.</p>
+          </div>
+        </div>
+        <div class="modal-body">
+          <ul class="pend-list">
+            <li><span class="warn-dot"></span> Matemática · 3º A — Notas finais <span class="qty">4 pendentes</span></li>
+            <li><span class="warn-dot"></span> Matemática · 3º A — Frequência <span class="qty">2 pendentes</span></li>
+            <li><span class="warn-dot"></span> História · 2º B — Notas finais <span class="qty">3 pendentes</span></li>
+          </ul>
+          <p class="small muted" style="margin:10px 2px 0">Total: 9 lançamentos pendentes em 2 turmas.</p>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost">Cancelar</button>
+          <button class="btn btn-primary">
+            Ver pendências
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     ARTBOARD 2 — Período bloqueado com sucesso e registro em log
+     (passos 5–7 + RF-44)
+     ============================================================ -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill">ESTADO 2</span> Período bloqueado com sucesso e registro em log (passos 5–7 + RF-44)</div>
+
+  <div class="app">
+
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">E</div><div class="name">EduHub</div></div>
+      <div class="nav-label">Administração</div>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Início</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Usuários</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg> Turmas e Disciplinas</a>
+      <a class="nav-item active" href="T-04-periodos.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Períodos Letivos</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg> Relatórios</a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6Z"/></svg> Auditoria</a>
+      <div class="sidebar-footer">
+        <div class="user-chip"><div class="avatar gray">CN</div><div class="meta"><b>Carlos Nunes</b><span>Coordenação</span></div></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div>
+          <div class="crumbs">EduHub / <b>Períodos Letivos</b></div>
+          <h1>Períodos Letivos</h1>
+        </div>
+        <div class="spacer"></div>
+        <div class="avatar gray">CN</div>
+      </div>
+
+      <div class="content">
+
+        <p class="muted" style="margin-top:0">Trave o lançamento de notas e frequência ao encerrar um período. A ação fica registrada em log de auditoria (RF-44).</p>
+
+        <div class="banner banner-ok" style="margin-bottom:18px">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+          <div><b>Período 1º Semestre de 2026 bloqueado com sucesso.</b> Notas e frequência não podem mais ser alteradas pelos professores (RF-26).</div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Período</th>
+                <th>Vigência</th>
+                <th class="right">Turmas</th>
+                <th>Status</th>
+                <th class="right">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2º Semestre de 2025</td>
+                <td>01/08/2025 – 20/12/2025</td>
+                <td class="num">24</td>
+                <td><span class="badge badge-locked"><span class="dot"></span>Bloqueado</span></td>
+                <td class="right"><button class="btn btn-ghost btn-sm">Ver detalhes</button></td>
+              </tr>
+              <tr style="background:var(--brand-050)">
+                <td><b>1º Semestre de 2026</b></td>
+                <td>03/02/2026 – 12/07/2026</td>
+                <td class="num">26</td>
+                <td><span class="badge badge-locked"><span class="dot"></span>Bloqueado</span></td>
+                <td class="right">
+                  <button class="btn btn-ghost btn-sm">
+                    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                    Ver log
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2º Semestre de 2026</td>
+                <td>01/08/2026 – 19/12/2026</td>
+                <td class="num">0</td>
+                <td><span class="badge badge-neutral"><span class="dot"></span>Não iniciado</span></td>
+                <td class="right"><button class="btn btn-secondary btn-sm" disabled>Travar</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-top:22px">
+          <div class="card-head">
+            <div>
+              <h2>Registro de auditoria</h2>
+              <div class="sub">Últimas ações neste período</div>
+            </div>
+          </div>
+          <div class="card-pad">
+            <div class="tbl-wrap" style="border:1px solid var(--line)">
+              <table class="data">
+                <thead>
+                  <tr>
+                    <th>Ação</th>
+                    <th>Responsável</th>
+                    <th>Data/hora</th>
+                    <th>Origem</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="var(--warn-600)" stroke-width="2" style="width:16px;height:16px"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                        Travou o lançamento do período "1º Semestre de 2026"
+                      </div>
+                    </td>
+                    <td>Carlos Nunes</td>
+                    <td>08/07/2026 14:32</td>
+                    <td class="small muted">IP 200.145.xx.xx</td>
+                  </tr>
+                  <tr>
+                    <td class="muted">Sistema verificou pendências — 0 restantes</td>
+                    <td>Sistema</td>
+                    <td>08/07/2026 14:31</td>
+                    <td class="small muted">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

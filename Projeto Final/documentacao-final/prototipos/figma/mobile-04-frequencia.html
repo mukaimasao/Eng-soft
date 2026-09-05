@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduHub Mobile — Frequência</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   EduHub — design system MOBILE (protótipos do fluxo CU-03)
+   Identidade definida pelo Masao: verde-pinho + branco.
+   Telas em frames de celular sobre canvas cinza (estilo Figma).
+   ============================================================ */
+
+:root {
+  --g-bar:    #12362C;   /* status bar, header, bottom nav, footer */
+  --g-card:   #1A4B3A;   /* cards de turma */
+  --g-btn:    #35624F;   /* botão primário */
+  --g-btn-2:  #2A5040;   /* pressionado */
+  --g-soft:   #DCE5E2;   /* pill claro "Ver mais", chips claros */
+  --g-soft-2: #EAF1EE;
+  --canvas:   #F5F5F5;   /* fundo do palco */
+  --ph:       #D9D9D9;   /* placeholders */
+  --ink:      #12362C;   /* títulos sobre branco */
+  --body:     #24302B;
+  --muted:    #7C877F;
+  --line:     #E7E9E8;
+  --field:    #D9DEDC;
+
+  --ok:      #2E8B57;
+  --ok-bg:   #E3F2EA;
+  --warn:    #C98A00;
+  --warn-bg: #FBF0D6;
+  --danger:  #C0453E;
+  --danger-bg:#FBE6E4;
+
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: var(--font); -webkit-font-smoothing: antialiased; }
+body { background: var(--canvas); color: var(--body); }
+
+/* ---------- Palco (canvas cinza) ---------- */
+.canvas { background: var(--canvas); padding: 26px; display: inline-flex; flex-direction: column; gap: 10px; }
+.frame-label { font-size: 13px; color: #6b6b6b; font-weight: 500; padding-left: 4px; }
+
+/* ---------- Frame do celular ---------- */
+.phone {
+  width: 375px; min-height: 812px;
+  background: #fff; border-radius: 30px; overflow: hidden;
+  box-shadow: 0 12px 40px rgba(18,32,26,.16), 0 2px 6px rgba(18,32,26,.10);
+  display: flex; flex-direction: column; position: relative;
+}
+
+/* Header verde (status bar + appbar formam bloco contínuo) */
+.gtop { background: var(--g-bar); color: #fff; }
+
+.statusbar {
+  height: 46px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px; position: relative; font-size: 14px; font-weight: 600; letter-spacing: .2px;
+}
+.statusbar .notch {
+  position: absolute; left: 50%; top: 9px; transform: translateX(-50%);
+  width: 122px; height: 26px; background: #fff; border-radius: 999px;
+}
+.statusbar .sb-icons { display: flex; align-items: center; gap: 6px; }
+.statusbar .sb-icons svg { width: 17px; height: 15px; }
+
+.appbar { display: flex; align-items: center; gap: 12px; padding: 6px 18px 16px; min-height: 40px; }
+.appbar .logo-ph { width: 108px; height: 30px; background: var(--ph); border-radius: 7px; }
+.appbar .title { font-size: 18px; font-weight: 700; color: #fff; }
+.appbar .spacer { flex: 1; }
+.appbar .iconbtn { width: 26px; height: 26px; color: #fff; display: grid; place-items: center; cursor: pointer; }
+.appbar .iconbtn svg { width: 24px; height: 24px; }
+.appbar .back { width: 24px; height: 24px; color: #fff; }
+
+/* Corpo branco */
+.body { flex: 1; background: #fff; padding: 18px 18px 22px; display: flex; flex-direction: column; }
+.body.scroll { overflow: hidden; }
+
+/* Bottom nav verde */
+.bottomnav { background: var(--g-bar); padding: 10px 8px 6px; }
+.bottomnav .items { display: flex; justify-content: space-around; align-items: flex-end; }
+.bottomnav .nav { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #9db3aa; font-size: 11px; font-weight: 500; flex: 1; }
+.bottomnav .nav svg { width: 22px; height: 22px; }
+.bottomnav .nav.active { color: #fff; }
+.bottomnav .nav.active .lbl { border-bottom: 2px solid #fff; padding-bottom: 2px; }
+.home-ind { width: 128px; height: 5px; background: #fff; border-radius: 999px; margin: 12px auto 0; opacity: .95; }
+
+/* Footer de marca (login) */
+.footer-brand { background: var(--g-bar); color: #fff; text-align: center; padding: 16px 0 10px; font-weight: 600; font-size: 15px; }
+.footer-brand .home-ind { margin-top: 12px; }
+
+/* ---------- Login ---------- */
+.logo-box { width: 156px; height: 74px; background: var(--ph); border-radius: 6px; margin: 30px auto 26px; }
+.m-field { margin-bottom: 15px; }
+.m-field label { display: block; font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+.m-input { display: flex; align-items: center; gap: 10px; border: 1px solid var(--field); border-radius: 9px; padding: 12px 13px; background: #fff; }
+.m-input svg { width: 18px; height: 18px; color: #9aa39e; flex: none; }
+.m-input input { border: 0; outline: 0; font-family: inherit; font-size: 14.5px; color: var(--body); width: 100%; background: transparent; }
+.m-input input::placeholder { color: #a7afaa; }
+.forgot { text-align: right; font-size: 12.5px; color: var(--muted); margin: 8px 2px 20px; }
+
+.btn-m {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; padding: 15px; border: 0; border-radius: 10px; cursor: pointer;
+  background: var(--g-btn); color: #fff; font-family: inherit; font-size: 15.5px; font-weight: 700; letter-spacing: .4px;
+}
+.btn-m svg { width: 17px; height: 17px; }
+.btn-m.press { background: var(--g-btn-2); }
+.btn-m.ghost { background: #fff; color: var(--ink); border: 1px solid var(--field); }
+.btn-m.lock { background: var(--warn); }
+.btn-m:disabled { opacity: .55; }
+
+/* ---------- Home ---------- */
+.time-widget { display: flex; align-items: center; justify-content: flex-end; gap: 6px; color: var(--muted); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.time-widget svg { width: 15px; height: 15px; }
+.section-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.section-row h2 { font-size: 19px; font-weight: 700; color: var(--ink); margin: 0; }
+.section-row .term { font-size: 12.5px; color: var(--muted); }
+
+.tcard { background: var(--g-card); color: #fff; border-radius: 13px; padding: 15px 16px; margin-bottom: 13px; }
+.tcard h3 { font-size: 15px; font-weight: 700; margin: 0 0 14px; }
+.tcard .tfoot { display: flex; align-items: center; justify-content: space-between; }
+.tcard .count { display: flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 600; }
+.tcard .count svg { width: 20px; height: 20px; }
+.pill-soft { display: inline-flex; align-items: center; gap: 5px; background: var(--g-soft); color: var(--ink); border-radius: 999px; padding: 6px 13px; font-size: 12.5px; font-weight: 700; }
+.pill-soft svg { width: 13px; height: 13px; }
+.tcard .tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.16); color: #fff; border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 600; }
+.tcard .tag.warn { background: var(--warn); }
+
+/* ---------- Banners (mobile) ---------- */
+.m-banner { display: flex; gap: 10px; align-items: flex-start; padding: 12px 13px; border-radius: 10px; font-size: 12.5px; line-height: 1.45; margin-bottom: 14px; }
+.m-banner svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+.m-banner b { font-weight: 700; }
+.m-banner.info { background: var(--g-soft-2); color: var(--ink); }
+.m-banner.lock { background: var(--warn-bg); color: #8a6200; }
+.m-banner.ok   { background: var(--ok-bg); color: #1f6b41; }
+.m-banner.danger { background: var(--danger-bg); color: #9a352f; }
+
+/* ---------- Chips de status ---------- */
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+.chip .dot { width: 6px; height: 6px; border-radius: 50%; }
+.chip.open { background: var(--ok-bg); color: var(--ok); } .chip.open .dot { background: var(--ok); }
+.chip.locked { background: var(--warn-bg); color: var(--warn); } .chip.locked .dot { background: var(--warn); }
+.chip.pending { background: var(--danger-bg); color: var(--danger); } .chip.pending .dot { background: var(--danger); }
+.chip.neutral { background: #EDEFEE; color: var(--muted); } .chip.neutral .dot { background: var(--muted); }
+
+/* ---------- Seletor (turma/período) mobile ---------- */
+.m-select { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--field); border-radius: 9px; padding: 11px 13px; font-size: 13.5px; font-weight: 600; color: var(--ink); background: #fff; margin-bottom: 6px; }
+.m-select svg { width: 16px; height: 16px; color: var(--muted); }
+.m-sub { font-size: 12px; color: var(--muted); margin: 0 2px 14px; }
+
+/* ---------- Lista de alunos (notas / frequência) ---------- */
+.stud-row { display: flex; align-items: center; gap: 11px; padding: 12px 2px; border-bottom: 1px solid var(--line); }
+.stud-row:last-child { border-bottom: 0; }
+.av { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; color: #fff; font-size: 12px; font-weight: 700; background: var(--g-card); }
+.av.gray { background: #9aa39e; }
+.stud-row .who { flex: 1; min-width: 0; }
+.stud-row .who .n { font-size: 14px; font-weight: 600; color: var(--ink); }
+.stud-row .who .m { font-size: 11.5px; color: var(--muted); }
+
+/* notas: mini inputs */
+.notes-cell { display: flex; align-items: center; gap: 7px; }
+.mini-in { width: 42px; text-align: center; border: 1px solid var(--field); border-radius: 7px; padding: 7px 4px; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ink); background: #fff; }
+.mini-in.filled { background: var(--g-soft-2); border-color: #cfe0d8; }
+.mini-in:disabled { background: #EEF0EF; color: #9aa39e; }
+.mini-lab { font-size: 10px; color: var(--muted); text-align: center; font-weight: 700; letter-spacing: .3px; }
+.avg { min-width: 40px; text-align: right; font-weight: 700; font-size: 15px; color: var(--ink); }
+.avg.low { color: var(--danger); }
+
+/* frequência: segmented P/A/J */
+.seg-m { display: inline-flex; border: 1px solid var(--field); border-radius: 8px; overflow: hidden; }
+.seg-m button { border: 0; background: #fff; font-family: inherit; font-size: 12.5px; font-weight: 700; padding: 6px 11px; color: var(--muted); border-right: 1px solid var(--line); cursor: pointer; }
+.seg-m button:last-child { border-right: 0; }
+.seg-m .on-p { background: var(--ok); color: #fff; }
+.seg-m .on-a { background: var(--danger); color: #fff; }
+.seg-m .on-j { background: var(--warn); color: #fff; }
+.freq-val { font-size: 13px; font-weight: 700; color: var(--ink); min-width: 40px; text-align: right; }
+.freq-val.low { color: var(--danger); }
+
+/* stats mini (frequência) */
+.mini-stats { display: flex; gap: 9px; margin-bottom: 14px; }
+.mini-stat { flex: 1; border: 1px solid var(--line); border-radius: 11px; padding: 10px; text-align: center; }
+.mini-stat .v { font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1; }
+.mini-stat .k { font-size: 10.5px; color: var(--muted); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: .3px; }
+.mini-stat.p .v { color: var(--ok); } .mini-stat.a .v { color: var(--danger); } .mini-stat.j .v { color: var(--warn); }
+
+/* ---------- Cards de período (admin) ---------- */
+.per-card { border: 1px solid var(--line); border-radius: 13px; padding: 14px 15px; margin-bottom: 12px; }
+.per-card.hi { border-color: #bcd3c8; background: #f6faf8; }
+.per-card .ph-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.per-card h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin: 0; }
+.per-card .vig { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.per-card .pfoot { display: flex; align-items: center; justify-content: space-between; }
+.per-card .turmas { font-size: 12.5px; color: var(--muted); }
+
+/* ---------- Bottom sheet / modal (mobile) ---------- */
+.sheet-scrim { position: absolute; inset: 0; background: rgba(10,22,17,.5); display: flex; align-items: flex-end; z-index: 20; }
+.sheet { background: #fff; width: 100%; border-radius: 22px 22px 0 0; padding: 10px 20px 24px; box-shadow: 0 -8px 30px rgba(0,0,0,.2); }
+.sheet .grab { width: 42px; height: 5px; background: #d8dcda; border-radius: 999px; margin: 0 auto 16px; }
+.sheet .s-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 12px; }
+.sheet .s-ic.warn { background: var(--warn-bg); color: var(--warn); } .sheet .s-ic.warn svg { width: 24px; height: 24px; }
+.sheet .s-ic.ok { background: var(--ok-bg); color: var(--ok); } .sheet .s-ic.ok svg { width: 24px; height: 24px; }
+.sheet h3 { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 5px; }
+.sheet p.s-sub { font-size: 13px; color: var(--muted); margin: 0 0 16px; line-height: 1.45; }
+.pend { list-style: none; margin: 0 0 12px; padding: 0; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; }
+.pend li { display: flex; align-items: center; gap: 9px; padding: 11px 13px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--body); }
+.pend li:last-child { border-bottom: 0; }
+.pend li .d { width: 7px; height: 7px; border-radius: 50%; background: var(--danger); flex: none; }
+.pend li .q { margin-left: auto; font-weight: 700; color: var(--danger); font-size: 12px; }
+.sheet-actions { display: flex; gap: 10px; }
+.sheet-actions .btn-m { flex: 1; }
+
+/* ---------- Log de auditoria (admin) ---------- */
+.log { border: 1px solid var(--line); border-radius: 12px; padding: 4px 14px; }
+.log .row { display: flex; gap: 11px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.log .row:last-child { border-bottom: 0; }
+.log .li { width: 30px; height: 30px; border-radius: 8px; background: var(--warn-bg); color: var(--warn); display: grid; place-items: center; flex: none; }
+.log .li svg { width: 16px; height: 16px; }
+.log .li.sys { background: #EEF0EF; color: var(--muted); }
+.log .lt { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.log .ls { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+.section-title-m { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 700; margin: 18px 0 10px; }
+.muted { color: var(--muted); } .small { font-size: 12px; }
+
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="frame-label">Frequência — chamada do dia</div>
+  <div class="phone">
+
+    <div class="gtop">
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="notch"></span>
+        <span class="sb-icons">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="14" width="3" height="6" rx="1"/><rect x="7" y="10" width="3" height="10" rx="1"/><rect x="13" y="6" width="3" height="14" rx="1"/><rect x="19" y="2" width="3" height="18" rx="1"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7.5" width="18" height="9" rx="2.5"/><rect x="4" y="9.5" width="12" height="5" rx="1" fill="currentColor" stroke="none"/><path d="M22 10.5v3" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+      <div class="appbar">
+        <div class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        <div class="title">Frequência</div>
+        <div class="spacer"></div>
+        <div class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+      </div>
+    </div>
+
+    <div class="body">
+
+      <div class="m-select">Engenharia de Software II - A2026
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="m-sub">05/07/2026 · Aula 2 · 08h50 &nbsp;·&nbsp; <span class="chip open"><span class="dot"></span>Período aberto</span></div>
+
+      <div class="mini-stats">
+        <div class="mini-stat p"><div class="v">6</div><div class="k">Presentes</div></div>
+        <div class="mini-stat a"><div class="v">1</div><div class="k">Ausentes</div></div>
+        <div class="mini-stat j"><div class="v">1</div><div class="k">Justificados</div></div>
+      </div>
+      <div class="small muted" style="margin:-6px 0 12px 2px">Frequência da turma: <b style="color:var(--ink)">94%</b> acumulado no bimestre.</div>
+
+      <div class="m-banner info">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5" fill="currentColor"/></svg>
+        <span>O total de faltas e o percentual de frequência são calculados automaticamente. (RF-25)</span>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">AR</div>
+          <div class="who"><div class="n">Amanda Ribeiro Costa</div><div class="m">2026001</div></div>
+          <div class="freq-val">96%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">1 falta</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">BT</div>
+          <div class="who"><div class="n">Bruno Tanaka Alves</div><div class="m">2026002</div></div>
+          <div class="freq-val">100%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">0 faltas</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">CM</div>
+          <div class="who"><div class="n">Carla Menezes Pinto</div><div class="m">2026003</div></div>
+          <div class="freq-val">92%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">2 faltas</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">DF</div>
+          <div class="who"><div class="n">Diego Fonseca Lima</div><div class="m">2026004</div></div>
+          <div class="freq-val low">72%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button>P</button><button class="on-a">A</button><button>J</button></div>
+          <span class="small muted">5 faltas</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">ES</div>
+          <div class="who"><div class="n">Erika Souza Prado</div><div class="m">2026005</div></div>
+          <div class="freq-val">96%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">1 falta</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">FA</div>
+          <div class="who"><div class="n">Felipe Andrade Rocha</div><div class="m">2026006</div></div>
+          <div class="freq-val">100%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">0 faltas</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">GM</div>
+          <div class="who"><div class="n">Giovana Martins Dias</div><div class="m">2026007</div></div>
+          <div class="freq-val">92%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button>P</button><button>A</button><button class="on-j">J</button></div>
+          <span class="small muted">2 faltas</span>
+        </div>
+      </div>
+
+      <div style="padding:11px 2px;border-bottom:1px solid var(--line)">
+        <div class="stud-row" style="border:0;padding:0 0 9px">
+          <div class="av">HL</div>
+          <div class="who"><div class="n">Henrique Lopes Vieira</div><div class="m">2026008</div></div>
+          <div class="freq-val">96%</div>
+        </div>
+        <div class="stud-row" style="border:0;padding:0 0 0 45px;justify-content:space-between">
+          <div class="seg-m"><button class="on-p">P</button><button>A</button><button>J</button></div>
+          <span class="small muted">1 falta</span>
+        </div>
+      </div>
+
+      <div class="small muted" style="margin-top:10px">P = Presente · A = Ausente · J = Justificado. Frequência mínima exigida: 75%.</div>
+
+    </div>
+
+    <div class="bottomnav">
+      <div class="items">
+        <a class="nav active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="lbl">Início</span>
+        </a>
+        <a class="nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+          <span class="lbl">Mensagens</span>
+        </a>
+        <a class="nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg>
+          <span class="lbl">Perfil</span>
+        </a>
+      </div>
+      <div class="home-ind"></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

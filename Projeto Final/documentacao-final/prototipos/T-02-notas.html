@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduHub — T-02 Lançamento de Notas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="eduhub.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ARTBOARD 1 — ESTADO 1: Período aberto, professor lançando notas
+     ============================================================ -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill">ESTADO 1</span> Período aberto — professor lançando notas</div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">E</div><div class="name">EduHub</div></div>
+      <div class="nav-label">Menu</div>
+      <a class="nav-item" href="Home-professor.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Início
+      </a>
+      <a class="nav-item" href="Home-professor.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg> Minhas Turmas
+      </a>
+      <a class="nav-item active" href="T-02-notas.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Lançamento de Notas
+      </a>
+      <a class="nav-item" href="T-03-frequencia.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Frequência
+      </a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> Mensagens
+      </a>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="avatar">AM</div>
+          <div class="meta"><b>Ana Martins</b><span>Professora</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div>
+          <div class="crumbs">EduHub / Notas / <b>3º Ano A · Matemática</b></div>
+          <h1>Lançamento de Notas</h1>
+        </div>
+        <div class="spacer"></div>
+        <span class="badge badge-open"><span class="dot"></span>Período aberto</span>
+        <div class="avatar">AM</div>
+      </div>
+
+      <div class="content">
+
+        <div class="toolbar">
+          <select class="select" style="width:auto;">
+            <option>3º Ano A — Matemática</option>
+          </select>
+          <select class="select" style="width:auto;">
+            <option>1º Semestre de 2026 · 2º Bimestre</option>
+          </select>
+          <div class="spacer"></div>
+          <button class="btn btn-ghost">Salvar rascunho</button>
+          <button class="btn btn-primary">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Salvar notas
+          </button>
+        </div>
+
+        <div class="banner banner-info" style="margin-bottom:16px;">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div>As médias são calculadas automaticamente. Você pode editar as notas enquanto o período estiver aberto.</div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Aluno</th>
+                <th class="num">P1</th>
+                <th class="num">P2</th>
+                <th class="num">Trabalho</th>
+                <th class="num">Média</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="stud"><div class="avatar sm">AB</div><div><div class="nm">Ana Beatriz Rocha</div><div class="id">2026001</div></div></td>
+                <td class="num"><input class="grade-in filled" value="8.5"></td>
+                <td class="num"><input class="grade-in filled" value="9.0"></td>
+                <td class="num"><input class="grade-in filled" value="9.5"></td>
+                <td class="num"><b>9.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">BC</div><div><div class="nm">Bruno Carvalho Lima</div><div class="id">2026002</div></div></td>
+                <td class="num"><input class="grade-in filled" value="7.0"></td>
+                <td class="num"><input class="grade-in filled" value="6.5"></td>
+                <td class="num"><input class="grade-in filled" value="8.0"></td>
+                <td class="num"><b>7.2</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">CF</div><div><div class="nm">Camila Ferreira Souza</div><div class="id">2026003</div></div></td>
+                <td class="num"><input class="grade-in filled" value="9.5"></td>
+                <td class="num"><input class="grade-in filled" value="8.5"></td>
+                <td class="num"><input class="grade-in filled" value="10.0"></td>
+                <td class="num"><b>9.3</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm gray">DA</div><div><div class="nm">Diego Almeida Nunes</div><div class="id">2026004</div></div></td>
+                <td class="num"><input class="grade-in" placeholder="—"></td>
+                <td class="num"><input class="grade-in" placeholder="—"></td>
+                <td class="num"><input class="grade-in" placeholder="—"></td>
+                <td class="num"><span class="badge badge-pending">pendente</span></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">EP</div><div><div class="nm">Eduarda Pires Gomes</div><div class="id">2026005</div></div></td>
+                <td class="num"><input class="grade-in filled" value="5.0"></td>
+                <td class="num"><input class="grade-in filled" value="4.5"></td>
+                <td class="num"><input class="grade-in filled" value="6.0"></td>
+                <td class="num"><b style="color:var(--danger-600)">5.2</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">FS</div><div><div class="nm">Felipe Santos Araújo</div><div class="id">2026006</div></div></td>
+                <td class="num"><input class="grade-in filled" value="6.5"></td>
+                <td class="num"><input class="grade-in filled" value="7.0"></td>
+                <td class="num"><input class="grade-in filled" value="7.5"></td>
+                <td class="num"><b>7.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">GN</div><div><div class="nm">Gabriela Nunes Dias</div><div class="id">2026007</div></div></td>
+                <td class="num"><input class="grade-in filled" value="8.0"></td>
+                <td class="num"><input class="grade-in filled" value="7.5"></td>
+                <td class="num"><input class="grade-in filled" value="8.5"></td>
+                <td class="num"><b>8.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">HO</div><div><div class="nm">Henrique Oliveira Melo</div><div class="id">2026008</div></div></td>
+                <td class="num"><input class="grade-in filled" value="4.0"></td>
+                <td class="num"><input class="grade-in filled" value="5.5"></td>
+                <td class="num"><input class="grade-in filled" value="5.0"></td>
+                <td class="num"><b style="color:var(--danger-600)">4.8</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small muted" style="margin-top:10px;">Média = (P1 + P2 + Trabalho) / 3. 1 nota final pendente nesta turma.</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ARTBOARD 2 — ESTADO 2: Período bloqueado, edição impedida (RF-26)
+     ============================================================ -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill">ESTADO 2</span> Período bloqueado — edição impedida (RF-26, fluxo alternativo 5.a do CU-03)</div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">E</div><div class="name">EduHub</div></div>
+      <div class="nav-label">Menu</div>
+      <a class="nav-item" href="Home-professor.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Início
+      </a>
+      <a class="nav-item" href="Home-professor.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg> Minhas Turmas
+      </a>
+      <a class="nav-item active" href="T-02-notas.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Lançamento de Notas
+      </a>
+      <a class="nav-item" href="T-03-frequencia.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Frequência
+      </a>
+      <a class="nav-item" href="#">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> Mensagens
+      </a>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="avatar">AM</div>
+          <div class="meta"><b>Ana Martins</b><span>Professora</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div>
+          <div class="crumbs">EduHub / Notas / <b>3º Ano A · Matemática</b></div>
+          <h1>Lançamento de Notas</h1>
+        </div>
+        <div class="spacer"></div>
+        <span class="badge badge-locked"><span class="dot"></span>Período bloqueado</span>
+        <div class="avatar">AM</div>
+      </div>
+
+      <div class="content">
+
+        <div class="toolbar">
+          <select class="select" style="width:auto;" disabled>
+            <option>3º Ano A — Matemática</option>
+          </select>
+          <select class="select" style="width:auto;" disabled>
+            <option>1º Semestre de 2026 · 2º Bimestre</option>
+          </select>
+          <div class="spacer"></div>
+          <button class="btn btn-ghost disabled" disabled>Salvar rascunho</button>
+          <button class="btn btn-secondary disabled" disabled>
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            Edição bloqueada
+          </button>
+        </div>
+
+        <div class="banner banner-lock" style="margin-bottom:16px;">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <div><b>Período encerrado para lançamentos.</b> As notas do 1º Semestre de 2026 foram travadas pela Coordenação em 08/07/2026. Consulte a Coordenação para eventuais correções. (RF-26)</div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Aluno</th>
+                <th class="num">P1</th>
+                <th class="num">P2</th>
+                <th class="num">Trabalho</th>
+                <th class="num">Média</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="stud"><div class="avatar sm">AB</div><div><div class="nm">Ana Beatriz Rocha</div><div class="id">2026001</div></div></td>
+                <td class="num"><input class="grade-in" value="8.5" disabled></td>
+                <td class="num"><input class="grade-in" value="9.0" disabled></td>
+                <td class="num"><input class="grade-in" value="9.5" disabled></td>
+                <td class="num"><b>9.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">BC</div><div><div class="nm">Bruno Carvalho Lima</div><div class="id">2026002</div></div></td>
+                <td class="num"><input class="grade-in" value="7.0" disabled></td>
+                <td class="num"><input class="grade-in" value="6.5" disabled></td>
+                <td class="num"><input class="grade-in" value="8.0" disabled></td>
+                <td class="num"><b>7.2</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">CF</div><div><div class="nm">Camila Ferreira Souza</div><div class="id">2026003</div></div></td>
+                <td class="num"><input class="grade-in" value="9.5" disabled></td>
+                <td class="num"><input class="grade-in" value="8.5" disabled></td>
+                <td class="num"><input class="grade-in" value="10.0" disabled></td>
+                <td class="num"><b>9.3</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm gray">DA</div><div><div class="nm">Diego Almeida Nunes</div><div class="id">2026004</div></div></td>
+                <td class="num"><input class="grade-in" placeholder="—" disabled></td>
+                <td class="num"><input class="grade-in" placeholder="—" disabled></td>
+                <td class="num"><input class="grade-in" placeholder="—" disabled></td>
+                <td class="num"><span class="badge badge-pending">pendente</span></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">EP</div><div><div class="nm">Eduarda Pires Gomes</div><div class="id">2026005</div></div></td>
+                <td class="num"><input class="grade-in" value="5.0" disabled></td>
+                <td class="num"><input class="grade-in" value="4.5" disabled></td>
+                <td class="num"><input class="grade-in" value="6.0" disabled></td>
+                <td class="num"><b style="color:var(--danger-600)">5.2</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">FS</div><div><div class="nm">Felipe Santos Araújo</div><div class="id">2026006</div></div></td>
+                <td class="num"><input class="grade-in" value="6.5" disabled></td>
+                <td class="num"><input class="grade-in" value="7.0" disabled></td>
+                <td class="num"><input class="grade-in" value="7.5" disabled></td>
+                <td class="num"><b>7.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">GN</div><div><div class="nm">Gabriela Nunes Dias</div><div class="id">2026007</div></div></td>
+                <td class="num"><input class="grade-in" value="8.0" disabled></td>
+                <td class="num"><input class="grade-in" value="7.5" disabled></td>
+                <td class="num"><input class="grade-in" value="8.5" disabled></td>
+                <td class="num"><b>8.0</b></td>
+              </tr>
+              <tr>
+                <td class="stud"><div class="avatar sm">HO</div><div><div class="nm">Henrique Oliveira Melo</div><div class="id">2026008</div></div></td>
+                <td class="num"><input class="grade-in" value="4.0" disabled></td>
+                <td class="num"><input class="grade-in" value="5.5" disabled></td>
+                <td class="num"><input class="grade-in" value="5.0" disabled></td>
+                <td class="num"><b style="color:var(--danger-600)">4.8</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small muted" style="margin-top:10px;">Média = (P1 + P2 + Trabalho) / 3. 1 nota final pendente nesta turma.</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

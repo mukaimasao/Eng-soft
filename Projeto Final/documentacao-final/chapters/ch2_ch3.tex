@@ -1,0 +1,576 @@
+% ============================================================================
+\chapter{Arquitetura do Sistema}
+% ============================================================================
+
+Este capítulo apresenta a arquitetura proposta para o EduHub a partir das
+restrições, premissas e requisitos não funcionais definidos no Capítulo 1. A
+arquitetura é modelada segundo o
+padrão C4, com diagramas de contexto (Nível 1), de contêineres (Nível 2) e de
+componentes (Nível 3). As decisões descritas derivam diretamente dessas
+restrições e requisitos.
+
+\section{Contexto e fronteiras do sistema}
+
+O EduHub é um sistema autônomo e independente,
+que não é componente de um sistema maior e não depende de sistemas acadêmicos
+legados nem de gateways de pagamento durante a operação. Sua única integração
+externa é com um serviço de e-mail, usado para o envio de notificações
+(RF-36). Os dados primários do sistema são inseridos e mantidos pela própria
+interface administrativa e, após a implantação, o EduHub passa a ser a fonte
+primária dos dados acadêmicos da instituição.
+
+A Figura~\ref{fig:c4-contexto} apresenta o diagrama de contexto (C4, Nível
+1). A fronteira do sistema compreende o próprio EduHub, os três perfis de
+usuário (Administrativo, Professor e Aluno), descritos na
+Tabela~\ref{tab:perfis-usuarios}, e o serviço de e-mail externo. A única
+outra dependência externa é operacional, a infraestrutura de servidor de
+produção fornecida pela equipe de TI da instituição (D-1, ver
+Seção~\ref{sec:restricoes-arquitetura}), e não uma integração de dados.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{c4-contexto.png}
+\caption{Diagrama de contexto do EduHub (C4 -- Nível 1). Fonte: elaboração própria da equipe.}
+\label{fig:c4-contexto}
+\end{figure}
+
+\section{Estilo ou padrão arquitetural}
+
+O EduHub adota uma organização modular por domínio funcional, derivada do
+RNF-07. O sistema é estruturado em módulos que correspondem às áreas de
+funcionalidade identificadas no Capítulo 1: Acesso e Autenticação, Cadastros
+e Gestão da Estrutura, Gestão Acadêmica, Informação e Consulta do Aluno,
+Comunicação e Notificações, e Relatórios e Auditoria. Cada módulo encapsula
+suas próprias regras de negócio e dados, o que reduz o acoplamento entre
+áreas que evoluem em ritmos diferentes. Por exemplo, o módulo de Comunicação
+pode receber novos recursos sem alterar o módulo de Gestão Acadêmica.
+
+Essa organização modular sustenta o objetivo de qualidade de
+manutenibilidade, apontado na Seção~\ref{sec:quality-goals} como prioridade
+alta, uma vez que módulos com fronteiras claras favorecem alta coesão e baixo
+acoplamento.
+
+\section{Contêineres e componentes}
+
+A arquitetura do EduHub foi modelada seguindo o padrão C4. Os diagramas de
+contêineres (Nível 2) e de componentes (Nível 3) detalham a estrutura interna
+do sistema a partir da visão de contexto.
+
+No Nível 2 (contêineres), ilustrado na Figura~\ref{fig:c4-container}, o EduHub
+é decomposto em três contêineres:
+\begin{itemize}[nosep]
+    \item \textbf{Frontend}: aplicação web responsiva acessada pelos usuários
+    via navegador, que concentra as telas de login, cadastro, grade horária e
+    demais interfaces.
+    \item \textbf{Backend}: responsável pela lógica de negócio e pela API que
+    atende às requisições do Frontend por meio de chamadas JSON/HTTP.
+    \item \textbf{Banco de Dados}: armazena os dados de alunos, disciplinas e
+    demais informações acadêmicas.
+\end{itemize}
+O Backend lê e escreve no Banco de Dados e solicita ao serviço de e-mail
+externo o envio das notificações.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{c4-container.png}
+\caption{Diagrama de contêineres do EduHub (C4 -- Nível 2). Fonte: elaboração própria da equipe.}
+\label{fig:c4-container}
+\end{figure}
+
+Cada contêiner do Backend concentra os módulos funcionais do sistema. A
+Tabela~\ref{tab:modulos} consolida esses módulos e suas responsabilidades,
+servindo de ponte entre os requisitos e os componentes detalhados a seguir.
+
+\begin{table}[H]
+\centering
+\caption{Módulos funcionais do EduHub.}
+\label{tab:modulos}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth} X}
+\toprule
+\textbf{Módulo} & \textbf{Responsabilidade principal} \\
+\midrule
+Acesso e Autenticação & Autenticação de usuários por credencial, recuperação
+de senha, gestão de cargos, hierarquia e permissões (RF-01 a RF-13). \\
+Cadastros e Gestão da Estrutura & Cadastro de dados da escola, turmas,
+disciplinas, horários, calendário acadêmico e vínculo professor-disciplina
+(RF-14 a RF-20). \\
+Gestão Acadêmica & Lançamento e edição de notas, registro de frequência,
+cálculo automático de faltas e travamento de períodos letivos (RF-21 a
+RF-27). \\
+Informação e Consulta do Aluno & Consulta a boletim, frequência, grade de
+horários, calendário e solicitação de documentos pelo aluno (RF-28 a
+RF-34). \\
+Comunicação e Notificações & Envio de comunicados pela administração,
+notificações por e-mail, caixa de entrada e mensagens do aluno com roteamento
+por tag de assunto (RF-35 a RF-41). \\
+Relatórios e Auditoria & Geração e exportação de relatórios acadêmicos e
+consulta ao log de alterações e auditoria (RF-42 a RF-45). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+No Nível 3 (componentes), ilustrado na Figura~\ref{fig:c4-componentes}, o
+contêiner Backend é detalhado em oito componentes que correspondem, em
+conjunto, aos módulos funcionais da Tabela~\ref{tab:modulos}:
+\begin{itemize}[nosep]
+    \item \textbf{Autenticação e Acesso}: login, 2FA e permissões.
+    \item \textbf{Gestão de Usuários}: cadastro de alunos, professores e
+    administradores.
+    \item \textbf{Estrutura Escolar}: cadastro base de escola, turmas e
+    disciplinas.
+    \item \textbf{Autoatendimento do Aluno}: consulta de boletim, grade
+    horária e calendário.
+    \item \textbf{Registro Acadêmico}: lançamento de notas e frequência.
+    \item \textbf{Mensageria e Comunicação}: caixa de entrada do aluno e
+    envio de avisos.
+    \item \textbf{Adaptador de E-mail}: formata e dispara os e-mails.
+    \item \textbf{Relatório e Auditoria}: geração de relatórios e gravação de
+    logs.
+\end{itemize}
+Os componentes gravam seus dados no Banco de Dados. O Adaptador de E-mail
+isola a comunicação com o serviço de e-mail externo, recebendo o e-mail não
+formatado da Mensageria, formatando-o e disparando-o para o serviço externo.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{c4-componentes.png}
+\caption{Diagrama de componentes do Backend do EduHub (C4 -- Nível 3). Fonte: elaboração própria da equipe.}
+\label{fig:c4-componentes}
+\end{figure}
+
+
+\section{Decisões arquiteturais relevantes}
+
+A tabela a seguir registra as decisões arquiteturais que decorrem
+diretamente das restrições e requisitos não funcionais especificados no
+Capítulo 1.
+
+\begin{table}[ht]
+\centering
+\caption{Decisões arquiteturais do EduHub.}
+\begin{tabularx}{\textwidth}{p{0.24\textwidth} X X}
+\toprule
+\textbf{Decisão} & \textbf{Motivação} & \textbf{Consequências} \\
+\midrule
+Aplicação web responsiva, sem aplicativo móvel nativo &
+R-1 exige acesso via navegador sem app nativo dedicado nesta versão &
+Reduz o esforço de desenvolvimento e manutenção (uma única base de código
+para todos os dispositivos), mas a experiência em telas pequenas depende
+inteiramente do design responsivo. \\
+Arquitetura modular por domínio funcional &
+RNF-07 exige que novos recursos sejam adicionados sem impactar módulos
+existentes &
+Facilita manutenção e evolução incremental (alinhado ao processo Scrumban do
+projeto), mas exige disciplina para manter baixo acoplamento entre módulos
+desde as primeiras iterações. \\
+Conformidade com a LGPD e criptografia de dados sensíveis &
+R-3 exige atendimento à legislação de proteção de dados e armazenamento
+seguro de credenciais e dados sensíveis. O RNF-03 detalha a criptografia em
+repouso de dados cadastrais, senhas e e-mails &
+Aumenta a complexidade do módulo de Acesso e Autenticação e da camada de
+persistência, mas é indispensável para tratar dados pessoais de alunos e
+professores. \\
+Suporte opcional a autenticação de dois fatores (2FA) &
+RNF-04 exige suporte opcional a 2FA para os perfis administrativo e docente &
+Reforça a segurança de acesso para os perfis com maior privilégio, sem
+tornar o login obrigatoriamente mais complexo para o perfil aluno. \\
+Acessibilidade conforme WCAG 2.1 (Nível AA) &
+R-2 e RNF-10 exigem que a interface siga as diretrizes WCAG 2.1 AA &
+Restringe escolhas de componentes de interface e exige testes de
+acessibilidade, mas garante inclusão de usuários com deficiência entre os
+três perfis. \\
+Sistema autônomo, com única integração externa (serviço de e-mail) &
+A equipe definiu o EduHub, já na especificação de requisitos (item 1.2.1),
+como sistema independente e fonte primária dos próprios dados. A única
+dependência externa em operação é o serviço de envio de e-mail para
+notificações (RF-36) &
+Simplifica a arquitetura (sem integrações com sistemas acadêmicos legados ou
+gateways de pagamento) e isola a dependência externa num único componente
+(Adaptador de E-mail). Dados de sistemas legados, se existirem, precisam ser
+inseridos manualmente pelo perfil administrativo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Restrições de arquitetura}
+\label{sec:restricoes-arquitetura}
+
+As restrições, premissas e dependências a seguir foram definidas pela equipe
+já na etapa de especificação de requisitos (itens 1.2.4 a 1.2.6) e limitam
+diretamente as decisões de arquitetura e implementação do EduHub.
+
+\begin{table}[ht]
+\centering
+\caption{Restrições, premissas e dependências do projeto.}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} X}
+\toprule
+\textbf{ID} & \textbf{Descrição} \\
+\midrule
+R-1 & O sistema deve ser desenvolvido como uma aplicação web responsiva
+(acessível via navegador), sem a necessidade de um aplicativo móvel nativo
+dedicado nesta versão. \\
+R-2 & A interface do usuário deve aderir aos padrões de acessibilidade WCAG
+2.1 (Nível AA) para garantir a inclusão de usuários com deficiência. \\
+R-3 & O sistema deve atender à legislação de proteção de dados (LGPD) no
+tratamento de informações pessoais de alunos e professores, e deve garantir
+que todas as credenciais de acesso e dados sensíveis sejam armazenados
+utilizando métodos criptográficos seguros. \\
+\midrule
+P-1 & Conectividade: presume-se que professores e administrativo terão
+acesso estável à internet com banda larga na instituição de ensino para a
+inserção de dados. \\
+P-2 & Navegadores suportados: presume-se uso restrito a Google Chrome e
+derivados Chromium, Mozilla Firefox e Safari (versões mais recentes); outros
+navegadores estão fora do escopo de teste e suporte. \\
+P-3 & Proficiência do usuário: presume-se que os usuários administrativos
+possuem proficiência básica no uso de computadores e ferramentas de
+escritório. \\
+P-4 & Processo de validação de notas: presume-se que os professores são
+responsáveis pela validação final e travamento das notas, cabendo à
+administração apenas monitorar esse processo. \\
+\midrule
+D-1 & Ambiente de produção: o projeto depende da alocação e configuração,
+pela equipe de TI da instituição, de um servidor de produção com as
+especificações mínimas de hardware e sistema operacional. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================================
+\chapter{Projeto de Componentes}
+% ============================================================================
+
+Este capítulo detalha, a partir dos módulos funcionais e dos componentes
+apresentados no Capítulo 2, os principais componentes de software do EduHub e
+as regras de negócio associadas a cada um, com base nos requisitos funcionais
+definidos no Capítulo 1. Para os componentes de Autenticação e Acesso e de
+Registro Acadêmico, dois dos mais centrais do sistema, apresenta-se também o
+projeto de classes correspondente na Seção 3.2.
+
+\section{Visão geral dos componentes}
+
+A Tabela~\ref{tab:componentes} lista os principais componentes do sistema,
+que correspondem aos componentes do diagrama C4 de Nível 3
+(Figura~\ref{fig:c4-componentes}) e aos requisitos funcionais que cada um
+implementa.
+
+\begin{table}[ht]
+\centering
+\caption{Principais componentes do EduHub.}
+\label{tab:componentes}
+\begin{tabularx}{\textwidth}{p{0.30\textwidth} X}
+\toprule
+\textbf{Componente} & \textbf{Responsabilidade principal} \\
+\midrule
+Autenticação e Acesso & Login por credencial, recuperação de senha, registro
+de histórico de login, autenticação de dois fatores e gestão de cargos,
+hierarquia e permissões (RF-01, RF-02, RF-05 a RF-10). \\
+Gestão de Usuários & Cadastro, edição e inativação de alunos, professores e
+administradores, incluindo dados de perfil (RF-03, RF-04, RF-11 a RF-13). \\
+Estrutura Escolar & Cadastro base da escola, turmas, disciplinas, horários,
+calendário acadêmico, vínculo professor-disciplina e prevenção de conflitos
+de horário (RF-14 a RF-20). \\
+Registro Acadêmico & Lançamento e edição de notas, registro de frequência,
+cálculo automático de faltas e travamento de lançamentos por período letivo
+(RF-21 a RF-27). \\
+Autoatendimento do Aluno & Consulta de boletim, frequência detalhada, grade
+de horários, calendário e solicitação de documentos (RF-28 a RF-34). \\
+Mensageria e Comunicação & Envio de comunicados pela administração, caixa de
+entrada do aluno e roteamento de mensagens por tag de assunto (RF-35 a
+RF-41). \\
+Adaptador de E-mail & Formatação e disparo das notificações por e-mail para o
+serviço externo (RF-36). \\
+Relatório e Auditoria & Geração e exportação de relatórios acadêmicos e
+registro e consulta dos logs de alteração (RF-42 a RF-45). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Detalhamento dos componentes principais}
+\label{sec:detalhamento}
+
+Dentre os componentes listados, dois são destacados por concentrarem regras
+de negócio mais complexas e por serem centrais aos objetivos de segurança e
+qualidade acadêmica do sistema.
+
+\textbf{Autenticação e Acesso:} Este componente concentra a autenticação dos
+usuários e o controle de cargos e permissões, garantindo que todo usuário do
+sistema opere sob um cargo bem definido. As regras de negócio associadas são:
+\begin{itemize}[nosep]
+    \item qualquer usuário se autentica por e-mail e senha (RF-01) e pode
+    solicitar a recuperação de senha por e-mail (RF-02), com registro do
+    histórico de login para auditoria (RF-05).
+    \item o sistema oferece suporte opcional a autenticação de dois fatores
+    para os perfis administrativo e docente (RNF-04).
+    \item todo novo usuário deve ser obrigatoriamente associado a um cargo no
+    momento da criação (RF-06).
+    \item apenas usuários com permissão administrativa podem designar ou
+    alterar o cargo de outro usuário (RF-07), e a alteração atualiza
+    imediatamente as permissões de acesso do usuário-alvo, conforme o CU-01.
+    \item o usuário administrativo pode criar cargos personalizados e definir
+    seu nível de hierarquia (RF-08).
+    \item o sistema mantém cargos padrões que não podem ser excluídos, mas
+    cujo nome de exibição pode ser alterado (RF-09).
+    \item permissões específicas podem ser definidas por cargo, seja ele
+    padrão ou personalizado (RF-10).
+\end{itemize}
+
+O projeto de classes correspondente ao componente de Autenticação e Acesso é
+apresentado na Figura~\ref{fig:classes-autenticacao}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{classes-autenticacao-acesso.png}
+\caption{Diagrama de classes do componente de Autenticação e Acesso do EduHub. Fonte: elaboração própria da equipe.}
+\label{fig:classes-autenticacao}
+\end{figure}
+
+O diagrama organiza as entidades
+centrais do domínio de acesso, como \texttt{Usuario}, \texttt{Cargo},
+\texttt{Permissao} e \texttt{HistoricoLogin}, em que cada usuário é associado a
+um único cargo e cada cargo agrupa as permissões que definem o que seus
+usuários podem fazer no sistema (RF-06, RF-10). A autenticação de dois fatores
+(RNF-04) é modelada pela interface \texttt{Metodo2FA}, com as operações
+\texttt{gerarCodigo()} e \texttt{validarCodigo()}, implementada pelas classes
+concretas \texttt{TwoFactorEmail} e \texttt{TwoFactorApp}, o que permite
+acrescentar novos meios de verificação sem alterar o restante do componente.
+As regras de negócio são expostas pela interface \texttt{AutenticacaoService},
+implementada por \texttt{AutenticacaoServiceImpl}, com operações como
+\texttt{autenticar()}, \texttt{recuperarSenha()}, \texttt{atribuirCargo()} e
+\texttt{verificarPermissao()}. A persistência é isolada pela interface
+\texttt{Autenticacao\allowbreak Repository}, responsável por operações como
+\texttt{salvarUsuario()}, \texttt{buscarUsuarioPorEmail()},
+\texttt{salvarCargo()} e \texttt{registrarHistoricoLogin()}. Assim como no
+Registro Acadêmico, essa separação entre serviço e repositório mantém as
+regras de negócio independentes da tecnologia de persistência, em linha com o
+objetivo de manutenibilidade (RNF-07).
+
+\textbf{Registro Acadêmico:} Este componente concentra as
+regras de negócio do processo de avaliação e controle de presença, com
+forte dependência do conceito de período letivo travado/destravado
+(RF-26, premissa P-4):
+\begin{itemize}[nosep]
+    \item o professor tem acesso exclusivo à lista de alunos e à estrutura
+    de notas apenas das turmas e disciplinas às quais está vinculado
+    (RF-21).
+    \item o professor pode inserir notas parciais e finais por disciplina e
+    por período letivo (RF-22) e editá-las (RF-23), desde que o período não
+    tenha sido travado pela administração (RF-23, RF-26).
+    \item o professor registra presença, falta ou justificativa de ausência
+    por aluno, data e aula/período (RF-24).
+    \item o sistema calcula automaticamente o total de faltas e o
+    percentual de frequência por disciplina (RF-25).
+    \item o usuário administrativo pode travar o lançamento de notas e
+    frequência por período letivo a qualquer momento, impedindo qualquer
+    alteração posterior pelos professores (RF-26). Conforme CU-03, se houver
+    turmas ou disciplinas do período com notas finais ou frequência
+    pendentes, o sistema apenas sinaliza essas pendências ao administrativo,
+    sem impedir o travamento. Uma correção após o período travado exige que
+    o professor solicite o destravamento à administração, que reabre o
+    período pela função ``Desbloquear Período'', permite a correção e trava
+    o período novamente.
+    \item o professor pode visualizar, a partir da lista de chamada, os
+    dados de contato do aluno cadastrados pelo administrativo (RF-27).
+\end{itemize}
+
+O projeto de classes correspondente ao componente de Registro Acadêmico é
+apresentado na Figura~\ref{fig:classes-registro}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{classes-registro-academico.png}
+\caption{Diagrama de classes do componente de Registro Acadêmico do EduHub. Fonte: elaboração própria da equipe.}
+\label{fig:classes-registro}
+\end{figure}
+
+O diagrama organiza as entidades centrais
+do domínio acadêmico, como \texttt{Nota}, \texttt{Aluno}, \texttt{Turma},
+\texttt{Disciplina} e \texttt{RegistroFrequencia}, e define a interface
+\texttt{TipoAvaliacao}, com as operações \texttt{calcularNotaFinal()} e
+\texttt{exigePresencaMinima()}, que abstrai os diferentes tipos de avaliação.
+As regras de negócio são expostas pela interface
+\texttt{RegistroAcademicoService}, implementada por
+\texttt{RegistroAcademicoServiceImpl}, com operações como
+\texttt{registrarNota()}, \texttt{consultarNotas()},
+\texttt{registrarFrequencia()} e \texttt{consultarFrequencia()}. A
+persistência é isolada pela interface \texttt{RegistroAcademicoRepository},
+responsável por operações como \texttt{salvarNota()},
+\texttt{buscarNotasPorAluno()}, \texttt{salvarFrequencia()} e
+\texttt{buscarFrequenciaPorAluno()}. Essa separação entre serviço e
+repositório mantém as regras de negócio independentes da tecnologia de
+persistência, em linha com o objetivo de manutenibilidade (RNF-07).
+
+O projeto de classes dos demais componentes será elaborado nas próximas
+iterações, conforme cada um for detalhado.
+
+\section{Princípios de projeto}
+
+A equipe já tratava coesão e acoplamento como atributos de qualidade de
+produto desde a etapa de especificação de requisitos, entendendo que, do
+ponto de vista do desenvolvedor, a qualidade é medida pela implementação de
+um código limpo, com alta coesão e baixo acoplamento, e associando esses
+atributos diretamente à manutenibilidade (RNF-07). Já naquela etapa ficou
+definido que a equipe monitoraria essas propriedades por meio de métricas
+estáticas de produto, como o CBO (\emph{Coupling Between Object Classes}) e o
+LCOM (\emph{Lack of Cohesion in Methods}), buscando manter CBO baixo e LCOM
+próximo de zero.
+
+Aplicado ao projeto de componentes do EduHub, esse princípio se traduz em
+manter a separação de responsabilidades já estabelecida na divisão modular
+do Capítulo 2: o componente de Controle de Acesso não deve conhecer as
+regras de negócio de Gestão Acadêmica (por exemplo, cálculo de faltas ou
+travamento de período letivo), e vice-versa. A relação entre eles deve se
+limitar à consulta de permissão, verificando se o professor está autorizado a
+lançar notas na turma. Da mesma forma, o componente de Relatórios e Auditoria
+deve depender dos demais módulos apenas para leitura de dados, sem que módulos
+como Gestão Acadêmica ou Cadastros precisem conhecer a lógica de geração de
+relatórios. Essa baixa dependência mútua entre componentes é o que permite,
+conforme RNF-07, adicionar novos recursos a um módulo sem impactar os
+demais.
+
+Além da coesão e do acoplamento, o projeto de classes do componente de
+Autenticação e Acesso (Figura~\ref{fig:classes-autenticacao}) aplica três
+princípios SOLID:
+\begin{itemize}[nosep]
+    \item \textbf{Responsabilidade Única (SRP)}: as entidades
+    (\texttt{Usuario}, \texttt{Cargo}, \texttt{Permissao} e
+    \texttt{HistoricoLogin}) representam apenas os dados e o estado, a interface
+    \texttt{AutenticacaoService} concentra as regras de autenticação e de
+    controle de acesso e a interface \texttt{Autenticacao\allowbreak Repository}
+    cuida apenas da persistência.
+    \item \textbf{Aberto/Fechado (OCP)}: a interface \texttt{Metodo2FA} deixa a
+    autenticação de dois fatores aberta para extensão e fechada para
+    modificação. Novos meios de verificação, como \texttt{TwoFactorEmail} e
+    \texttt{TwoFactorApp}, são adicionados como classes concretas, e um
+    eventual método por SMS entraria da mesma maneira, sem alterar o código
+    existente.
+    \item \textbf{Inversão de Dependência (DIP)}: a implementação
+    \texttt{AutenticacaoServiceImpl} depende da abstração
+    \texttt{Autenticacao\allowbreak Repository}, e não de uma tecnologia de
+    persistência concreta, o que mantém as regras de controle de acesso
+    independentes da infraestrutura.
+\end{itemize}
+Da mesma forma, o projeto de classes do componente de Registro Acadêmico
+(Figura~\ref{fig:classes-registro}) aplica os mesmos três princípios:
+\begin{itemize}[nosep]
+    \item \textbf{Responsabilidade Única (SRP)}: cada classe tem um papel bem
+    definido. As entidades (\texttt{Nota}, \texttt{Aluno}) representam apenas
+    os dados e o estado, o serviço (\texttt{RegistroAcademicoService})
+    concentra as regras de negócio e o repositório
+    (\texttt{RegistroAcademicoRepository}) cuida apenas da persistência, o que
+    facilita a manutenção e os testes isolados.
+    \item \textbf{Aberto/Fechado (OCP)}: a interface \texttt{TipoAvaliacao}
+    deixa o sistema aberto para extensão e fechado para modificação. Novos
+    tipos de avaliação, como \texttt{AvaliacaoProva} e
+    \texttt{AvaliacaoTrabalho}, são adicionados como classes concretas, sem
+    alterar o código existente e sem recorrer a enumerações e a múltiplos
+    condicionais.
+    \item \textbf{Inversão de Dependência (DIP)}: a implementação
+    \texttt{RegistroAcademicoServiceImpl} depende de abstrações, e não de
+    detalhes técnicos. O \texttt{RegistroAcademicoRepository} oculta a
+    tecnologia de persistência concreta, como MySQL, MongoDB ou uma API, o que
+    mantém as regras de negócio independentes da infraestrutura.
+\end{itemize}
+Os princípios SOLID restantes, a Substituição de Liskov (LSP) e a Segregação
+de Interface (ISP), e sua aplicação aos demais componentes serão detalhados
+nas próximas iterações, conforme o projeto de classes de cada um for
+elaborado.
+
+\section{Padrões de projeto}
+
+O projeto de classes apresentado na Seção~\ref{sec:detalhamento} e a divisão
+em componentes do Capítulo 2 evidenciam padrões de projeto que se encaixam naturalmente nos problemas de
+projeto do EduHub. Esta seção documenta os quatro padrões de encaixe mais
+direto, indicando o problema que cada um resolve e um trecho de código
+ilustrativo.
+
+\textbf{Strategy (comportamental):} O componente de Registro Acadêmico
+precisa calcular a nota final de diferentes tipos de avaliação, e o de
+Autenticação e Acesso precisa validar diferentes métodos de segundo fator.
+Tratar essas variações com uma cadeia de condicionais dentro do serviço
+tornaria o código fechado à inclusão de novos tipos. O padrão Strategy
+encapsula cada variação atrás de uma interface comum, deixando o serviço
+independente da implementação concreta e permitindo acrescentar novos tipos
+sem alterar o código existente, em conformidade com o princípio Aberto/Fechado.
+Esse padrão já aparece no projeto de classes da Seção~\ref{sec:detalhamento},
+nas interfaces \texttt{TipoAvaliacao} e \texttt{Metodo2FA}.
+
+\begin{lstlisting}
+interface TipoAvaliacao {
+    double calcularNotaFinal(double nota);
+    boolean exigePresencaMinima();
+}
+class AvaliacaoProva    implements TipoAvaliacao { /* ... */ }
+class AvaliacaoTrabalho implements TipoAvaliacao { /* ... */ }
+
+// o servico recebe a estrategia e nao conhece a implementacao concreta
+double notaFinal = tipoAvaliacao.calcularNotaFinal(valor);
+\end{lstlisting}
+
+\textbf{Adapter (estrutural):} O EduHub envia notificações por meio de um
+serviço de e-mail externo, cuja interface difere da esperada pelos componentes
+internos. Como esse serviço é de terceiros e não pode ser modificado, o padrão
+Adapter cria uma classe intermediária que implementa a interface interna
+\texttt{Notificador} e traduz suas chamadas para a API externa. É esse o papel
+do componente Adaptador de E-mail (RF-36).
+
+\begin{lstlisting}
+interface Notificador {
+    void notificar(Usuario destino, String assunto, String corpo);
+}
+
+class AdaptadorEmail implements Notificador {
+    private final ServicoEmailExterno externo; // API de terceiros, imutavel
+
+    AdaptadorEmail(ServicoEmailExterno externo) { this.externo = externo; }
+
+    public void notificar(Usuario destino, String assunto, String corpo) {
+        // traduz a chamada interna para a API externa
+        externo.send("no-reply@eduhub", destino.getEmail(), assunto, corpo);
+    }
+}
+\end{lstlisting}
+
+\textbf{Observer (comportamental):} Eventos como a publicação de um comunicado
+(RF-35) ou o lançamento de uma nota exigem que vários destinos sejam
+atualizados, como a caixa de entrada do aluno (RF-37) e o disparo de e-mail
+(RF-36). Acoplar o produtor do evento a cada destino dificultaria a inclusão de
+novos canais. O padrão Observer define uma relação um-para-muitos em que o
+objeto observado notifica automaticamente todos os observadores registrados
+quando seu estado muda.
+
+\begin{lstlisting}
+class EventoAcademico extends Subject {
+    void publicarComunicado(Comunicado c) {
+        this.comunicado = c;
+        notifyObservers(); // avisa todos os canais registrados
+    }
+}
+class CanalCaixaEntrada implements Observer {
+    public void update(Subject s) { /* grava na caixa de entrada */ }
+}
+class CanalEmail implements Observer {
+    public void update(Subject s) { /* dispara via AdaptadorEmail */ }
+}
+\end{lstlisting}
+
+\textbf{Proxy de proteção (estrutural):} Regras como o acesso do professor
+apenas às turmas às quais está vinculado (RF-21) e a restrição de alteração de
+cargos a perfis administrativos (RF-07) exigem verificar a permissão antes de
+executar a operação. Em vez de espalhar essa verificação pelas regras de
+negócio, o padrão Proxy interpõe um objeto que implementa a mesma interface do
+serviço real, verifica a permissão e apenas então delega a chamada.
+
+\begin{lstlisting}
+class RegistroAcademicoProxy implements RegistroAcademicoService {
+    private final RegistroAcademicoService real;
+    private final AutenticacaoService acesso;
+
+    public Nota registrarNota(int alunoId, int disciplinaId,
+                              double valor, TipoAvaliacao tipo) {
+        if (!acesso.verificarPermissao(professorAtual(), "LANCAR_NOTA"))
+            throw new AcessoNegado();
+        return real.registrarNota(alunoId, disciplinaId, valor, tipo);
+    }
+}
+\end{lstlisting}

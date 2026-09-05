@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduHub Desktop — Lançamento de Notas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="eduhub-desktop.css">
+</head>
+<body>
+
+<!-- ===================== ESTADO 1 — ABERTO ===================== -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill2">ESTADO 1</span> Período aberto — professor lançando notas</div>
+
+  <header class="topnav">
+    <div class="brandmark"><div class="m">E</div><div class="w">EduHub</div></div>
+    <nav><a>Início</a><a>Turmas</a><a class="active">Notas</a><a>Frequência</a><a>Mensagens</a></nav>
+    <div class="push"></div>
+    <div class="period"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 1º Semestre de 2026</div>
+    <div class="who"><div class="nm"><b>Ana Martins</b><span>Professora</span></div><div class="avatar sm">AM</div></div>
+  </header>
+
+  <div class="page"><div class="wrap">
+    <div class="pagehead">
+      <div>
+        <div class="kicker">Registro acadêmico</div>
+        <h1 class="display">Lançamento de notas</h1>
+        <div class="subline">Engenharia de Software II <b>· Turma A2026</b> · 2º bimestre</div>
+      </div>
+      <div class="head-actions"><span class="pill open"><span class="dot"></span>Período aberto</span></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="selectish"><span class="lab">Turma</span> A2026 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="selectish"><span class="lab">Avaliação</span> P1 · P2 · Trabalho <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="push"></div>
+      <button class="btn btn-quiet">Salvar rascunho</button>
+      <button class="btn btn-solid"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Salvar notas</button>
+    </div>
+
+    <div class="notice info" style="margin-bottom:18px">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <div>As médias são calculadas automaticamente enquanto o período estiver aberto. <b>1 nota final pendente</b> nesta turma.</div>
+    </div>
+
+    <div class="panel"><div class="ledger-wrap"><table class="ledger">
+      <thead><tr><th>Aluno</th><th class="num">P1</th><th class="num">P2</th><th class="num">Trabalho</th><th style="text-align:right">Média</th></tr></thead>
+      <tbody>
+        <tr><td><div class="who-cell"><div class="av">AR</div><div><div class="nm">Amanda Ribeiro Costa</div><div class="id">2026001</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="8.5"></td><td class="num"><input class="grade-in filled" value="9.0"></td><td class="num"><input class="grade-in filled" value="9.5"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">9.0</span><span class="bar"><i style="width:90%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">BT</div><div><div class="nm">Bruno Tanaka Alves</div><div class="id">2026002</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="7.0"></td><td class="num"><input class="grade-in filled" value="6.5"></td><td class="num"><input class="grade-in filled" value="8.0"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">7.2</span><span class="bar"><i style="width:72%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">CM</div><div><div class="nm">Carla Menezes Pinto</div><div class="id">2026003</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="9.5"></td><td class="num"><input class="grade-in filled" value="8.5"></td><td class="num"><input class="grade-in filled" value="10.0"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">9.3</span><span class="bar"><i style="width:93%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">DF</div><div><div class="nm">Diego Fonseca Lima</div><div class="id">2026004</div></div></div></td>
+          <td class="num"><input class="grade-in" placeholder="—"></td><td class="num"><input class="grade-in" placeholder="—"></td><td class="num"><input class="grade-in" placeholder="—"></td>
+          <td style="text-align:right"><span class="pill pending"><span class="dot"></span>pendente</span></td></tr>
+        <tr><td><div class="who-cell"><div class="av">ES</div><div><div class="nm">Erika Souza Prado</div><div class="id">2026005</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="5.0"></td><td class="num"><input class="grade-in filled" value="4.5"></td><td class="num"><input class="grade-in filled" value="6.0"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v low">5.2</span><span class="bar"><i class="low" style="width:52%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">FA</div><div><div class="nm">Felipe Andrade Rocha</div><div class="id">2026006</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="6.5"></td><td class="num"><input class="grade-in filled" value="7.0"></td><td class="num"><input class="grade-in filled" value="7.5"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">7.0</span><span class="bar"><i style="width:70%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">GM</div><div><div class="nm">Giovana Martins Dias</div><div class="id">2026007</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="8.0"></td><td class="num"><input class="grade-in filled" value="7.5"></td><td class="num"><input class="grade-in filled" value="8.5"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">8.0</span><span class="bar"><i style="width:80%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">HL</div><div><div class="nm">Henrique Lopes Vieira</div><div class="id">2026008</div></div></div></td>
+          <td class="num"><input class="grade-in filled" value="4.0"></td><td class="num"><input class="grade-in filled" value="5.5"></td><td class="num"><input class="grade-in filled" value="5.0"></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v low">4.8</span><span class="bar"><i class="low" style="width:48%"></i></span></div></td></tr>
+      </tbody>
+    </table></div></div>
+    <div class="small muted" style="margin-top:12px">Média = (P1 + P2 + Trabalho) / 3.</div>
+  </div></div>
+</div>
+
+<!-- ===================== ESTADO 2 — BLOQUEADO ===================== -->
+<div class="artboard">
+  <div class="artboard-tag"><span class="pill2">ESTADO 2</span> Período bloqueado — edição impedida (RF-26, fluxo alt. 5.a do CU-03)</div>
+
+  <header class="topnav">
+    <div class="brandmark"><div class="m">E</div><div class="w">EduHub</div></div>
+    <nav><a>Início</a><a>Turmas</a><a class="active">Notas</a><a>Frequência</a><a>Mensagens</a></nav>
+    <div class="push"></div>
+    <div class="period"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 1º Semestre de 2026</div>
+    <div class="who"><div class="nm"><b>Ana Martins</b><span>Professora</span></div><div class="avatar sm">AM</div></div>
+  </header>
+
+  <div class="page"><div class="wrap">
+    <div class="pagehead">
+      <div>
+        <div class="kicker">Registro acadêmico</div>
+        <h1 class="display">Lançamento de notas</h1>
+        <div class="subline">Engenharia de Software II <b>· Turma A2026</b> · 2º bimestre</div>
+      </div>
+      <div class="head-actions"><span class="pill locked"><span class="dot"></span>Período bloqueado</span></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="selectish"><span class="lab">Turma</span> A2026 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="selectish"><span class="lab">Avaliação</span> P1 · P2 · Trabalho <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="push"></div>
+      <button class="btn btn-quiet disabled" disabled>Salvar rascunho</button>
+      <button class="btn btn-outline disabled" disabled><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Edição bloqueada</button>
+    </div>
+
+    <div class="notice locked" style="margin-bottom:18px">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <div><b>Período encerrado para lançamentos.</b> As notas do 1º semestre de 2026 foram travadas pela Coordenação em 08/07/2026. Consulte a Coordenação para eventuais correções. (RF-26)</div>
+    </div>
+
+    <div class="panel"><div class="ledger-wrap"><table class="ledger">
+      <thead><tr><th>Aluno</th><th class="num">P1</th><th class="num">P2</th><th class="num">Trabalho</th><th style="text-align:right">Média</th></tr></thead>
+      <tbody>
+        <tr><td><div class="who-cell"><div class="av">AR</div><div><div class="nm">Amanda Ribeiro Costa</div><div class="id">2026001</div></div></div></td>
+          <td class="num"><input class="grade-in" value="8.5" disabled></td><td class="num"><input class="grade-in" value="9.0" disabled></td><td class="num"><input class="grade-in" value="9.5" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">9.0</span><span class="bar"><i style="width:90%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">BT</div><div><div class="nm">Bruno Tanaka Alves</div><div class="id">2026002</div></div></div></td>
+          <td class="num"><input class="grade-in" value="7.0" disabled></td><td class="num"><input class="grade-in" value="6.5" disabled></td><td class="num"><input class="grade-in" value="8.0" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">7.2</span><span class="bar"><i style="width:72%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">CM</div><div><div class="nm">Carla Menezes Pinto</div><div class="id">2026003</div></div></div></td>
+          <td class="num"><input class="grade-in" value="9.5" disabled></td><td class="num"><input class="grade-in" value="8.5" disabled></td><td class="num"><input class="grade-in" value="10.0" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">9.3</span><span class="bar"><i style="width:93%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">DF</div><div><div class="nm">Diego Fonseca Lima</div><div class="id">2026004</div></div></div></td>
+          <td class="num"><input class="grade-in" placeholder="—" disabled></td><td class="num"><input class="grade-in" placeholder="—" disabled></td><td class="num"><input class="grade-in" placeholder="—" disabled></td>
+          <td style="text-align:right"><span class="pill pending"><span class="dot"></span>pendente</span></td></tr>
+        <tr><td><div class="who-cell"><div class="av">ES</div><div><div class="nm">Erika Souza Prado</div><div class="id">2026005</div></div></div></td>
+          <td class="num"><input class="grade-in" value="5.0" disabled></td><td class="num"><input class="grade-in" value="4.5" disabled></td><td class="num"><input class="grade-in" value="6.0" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v low">5.2</span><span class="bar"><i class="low" style="width:52%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">FA</div><div><div class="nm">Felipe Andrade Rocha</div><div class="id">2026006</div></div></div></td>
+          <td class="num"><input class="grade-in" value="6.5" disabled></td><td class="num"><input class="grade-in" value="7.0" disabled></td><td class="num"><input class="grade-in" value="7.5" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">7.0</span><span class="bar"><i style="width:70%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">GM</div><div><div class="nm">Giovana Martins Dias</div><div class="id">2026007</div></div></div></td>
+          <td class="num"><input class="grade-in" value="8.0" disabled></td><td class="num"><input class="grade-in" value="7.5" disabled></td><td class="num"><input class="grade-in" value="8.5" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v">8.0</span><span class="bar"><i style="width:80%"></i></span></div></td></tr>
+        <tr><td><div class="who-cell"><div class="av">HL</div><div><div class="nm">Henrique Lopes Vieira</div><div class="id">2026008</div></div></div></td>
+          <td class="num"><input class="grade-in" value="4.0" disabled></td><td class="num"><input class="grade-in" value="5.5" disabled></td><td class="num"><input class="grade-in" value="5.0" disabled></td>
+          <td><div class="metric" style="margin-left:auto"><span class="v low">4.8</span><span class="bar"><i class="low" style="width:48%"></i></span></div></td></tr>
+      </tbody>
+    </table></div></div>
+    <div class="small muted" style="margin-top:12px">Média = (P1 + P2 + Trabalho) / 3.</div>
+  </div></div>
+</div>
+
+</body>
+</html>
